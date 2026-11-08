@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
+import { AppI18nProvider } from "./i18n/AppI18nProvider";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import { ApplicationUrlDialog } from "./components/ApplicationUrlDialog";
 import { AppToaster } from "./components/AppToaster";
@@ -46,11 +47,13 @@ createRoot(document.getElementById("root")!, {
   <StrictMode>
     <AppErrorBoundary>
       <QueryClientProvider client={appQueryClient}>
-        <BrowserRouter>
-          <App />
-          <AppToaster />
-          <ApplicationUrlDialog />
-        </BrowserRouter>
+        <AppI18nProvider>
+          <BrowserRouter>
+            <App />
+            <AppToaster />
+            <ApplicationUrlDialog />
+          </BrowserRouter>
+        </AppI18nProvider>
       </QueryClientProvider>
     </AppErrorBoundary>
   </StrictMode>,

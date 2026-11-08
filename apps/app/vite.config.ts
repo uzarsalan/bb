@@ -11,6 +11,8 @@ import { sharedUiEnvSeam } from "./vite-shared-ui-seam.js";
 import { cachedReactCompiler } from "./vite-react-compiler.js";
 import { journeyChunkGroups } from "./vite-journey-chunks.js";
 import { pluginZodRuntime } from "./vite-plugin-zod-runtime.js";
+import { lingui } from "@lingui/vite-plugin";
+import { linguiMacro } from "./vite-lingui-macro.js";
 
 const appDir = dirname(fileURLToPath(import.meta.url));
 
@@ -19,6 +21,8 @@ export const sharedViteConfig = {
     pluginZodRuntime(),
     sharedUiEnvSeam(),
     react(),
+    lingui(),
+    linguiMacro(),
     cachedReactCompiler(),
     tailwindcss(),
     bundleStats(),

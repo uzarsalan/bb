@@ -10,6 +10,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { forkablePluginPaths } from "./vite-forkable-plugin-paths.js";
 import { sharedUiEnvSeam } from "./vite-shared-ui-seam.js";
 import { pluginZodRuntime } from "./vite-plugin-zod-runtime.js";
+import { lingui } from "@lingui/vite-plugin";
+import { linguiMacro } from "./vite-lingui-macro.js";
 
 class AppTestSequencer extends SharedWorkerSequencer {
   override async sort(
@@ -29,6 +31,8 @@ export default defineWorkspaceTestConfig({
     forkablePluginPaths(path.resolve(__dirname, "./src")),
     sharedUiEnvSeam(),
     react(),
+    lingui(),
+    linguiMacro(),
     tailwindcss(),
   ],
   resolve: {

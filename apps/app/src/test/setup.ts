@@ -1,6 +1,26 @@
 /// <reference types="vitest/jsdom" />
 
 import "@bb/shared-ui/icon-extended";
+import { vi } from "vitest";
+
+vi.mock("@lingui/react", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@lingui/react")>();
+  const { i18n } = await import("@/i18n/i18n");
+  return {
+    ...actual,
+    useLingui: () => {
+      try {
+        return actual.useLingui();
+      } catch {
+        return {
+          i18n,
+          _: i18n._.bind(i18n),
+          defaultComponent: undefined,
+        };
+      }
+    },
+  };
+});
 
 if (typeof globalThis.navigator === "undefined") {
   Object.defineProperty(globalThis, "navigator", {
