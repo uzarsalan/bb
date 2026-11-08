@@ -5,6 +5,7 @@ import {
   searchSettings,
   SETTINGS_SEARCH_ANCHOR_STATE_KEY,
 } from "./settings-search";
+import { i18n } from "@/i18n/i18n";
 import { SETTINGS_NAV_SECTIONS } from "./settings-sections";
 
 const linearPlugin = {
@@ -29,6 +30,7 @@ const allItems = buildSettingsSearchItems({
   pluginEntries: [linearPlugin],
   pluginSettings: linearSettings,
   sections: SETTINGS_NAV_SECTIONS,
+  translate: (message) => i18n._(message),
 });
 
 function searchTitles(query: string, items = allItems): string[] {
@@ -109,6 +111,7 @@ describe("searchSettings", () => {
           ],
           pluginSettings: [],
           sections: [],
+          translate: (message) => i18n._(message),
         }),
       ),
     ).toEqual(["Plugin settings › Tracker"]);
@@ -141,6 +144,7 @@ describe("searchSettings", () => {
       sections: SETTINGS_NAV_SECTIONS.filter(
         (section) => section.id !== "files",
       ),
+      translate: (message) => i18n._(message),
     });
     expect(searchTitles("file openers")).toEqual(["Files › File openers"]);
     expect(searchTitles("file openers", withoutFiles)).toEqual([]);
@@ -157,6 +161,7 @@ describe("buildSettingsSearchItems", () => {
           pluginEntries: [],
           pluginSettings: [],
           sections: SETTINGS_NAV_SECTIONS,
+          translate: (message) => i18n._(message),
         }),
       );
 

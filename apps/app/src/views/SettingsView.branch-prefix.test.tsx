@@ -28,6 +28,8 @@ function renderSection(overrides?: {
       onSummarizeShellCommandsChange={vi.fn()}
       desktopBrowserAvailable={false}
       generalSettingsDisabled={overrides?.generalSettingsDisabled ?? false}
+      language="en"
+      onLanguageChange={vi.fn()}
       terminalCopyOnSelect={overrides?.terminalCopyOnSelect ?? true}
       onTerminalCopyOnSelectChange={
         overrides?.onTerminalCopyOnSelectChange ?? vi.fn()

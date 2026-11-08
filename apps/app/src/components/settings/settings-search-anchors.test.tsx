@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
 /// <reference types="vitest/jsdom" />
 
+import type { MessageDescriptor } from "@lingui/core";
+import { i18n } from "@/i18n/i18n";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { MemoryRouter } from "react-router-dom";
@@ -85,16 +87,20 @@ afterEach(() => {
   jsdom.reconfigure({ url: LOCAL_URL });
 });
 
+function resolveTitle(title: string | MessageDescriptor): string {
+  return typeof title === "string" ? title : i18n._(title);
+}
+
 describe("settings search index", () => {
   it.each(sectionsWithSettings)(
-    "renders every unconditional $label setting without plugins on localhost",
+    "renders every unconditional $id setting without plugins on localhost",
     async (section) => {
       jsdom.reconfigure({ url: LOCAL_URL });
       renderSection(section);
 
       const titles = SETTINGS_SEARCH_INDEX[section.id].settings
         .filter((setting) => setting.when === undefined)
-        .map((setting) => setting.title);
+        .map((setting) => resolveTitle(setting.title));
       await waitFor(() => {
         expect(missingAnchors(titles)).toEqual([]);
       });
@@ -102,14 +108,14 @@ describe("settings search index", () => {
   );
 
   it.each(sectionsWithSettings)(
-    "renders every $label setting once each condition is met",
+    "renders every $id setting once each condition is met",
     async (section) => {
       jsdom.reconfigure({ url: REMOTE_URL });
       registerReplacementPlugin();
       renderSection(section);
 
-      const titles = SETTINGS_SEARCH_INDEX[section.id].settings.map(
-        (setting) => setting.title,
+      const titles = SETTINGS_SEARCH_INDEX[section.id].settings.map((setting) =>
+        resolveTitle(setting.title),
       );
       await waitFor(() => {
         expect(missingAnchors(titles)).toEqual([]);

@@ -18,6 +18,7 @@
     "vite-forkable-plugin-paths.ts",
     "vite-shared-ui-seam.ts",
     "vite-react-compiler.ts",
-    "vite-plugin-zod-runtime.ts"
+    "vite-plugin-zod-runtime.ts",
+    "vite-lingui-macro.ts"
   ]
 }

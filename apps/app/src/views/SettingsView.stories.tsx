@@ -210,6 +210,8 @@ function GeneralSettingsStory({
         onSummarizeShellCommandsChange={state.setSummarizeShellCommands}
         desktopBrowserAvailable={desktopBrowserAvailable}
         generalSettingsDisabled={false}
+        language="en"
+        onLanguageChange={() => {}}
         terminalCopyOnSelect={terminalCopyOnSelect}
         onTerminalCopyOnSelectChange={setTerminalCopyOnSelect}
         managedBranchPrefix={state.managedBranchPrefix}

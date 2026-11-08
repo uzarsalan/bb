@@ -1,3 +1,5 @@
+import { useLingui } from "@lingui/react/macro";
+import { plural } from "@lingui/core/macro";
 import {
   memo,
   useCallback,
@@ -90,11 +92,12 @@ const ShortcutRecorder = memo(
     recording,
     shortcut,
   }: ShortcutRecorderProps) {
+    const { t } = useLingui();
     const platform = browserPlatform();
     const [error, setError] = useState<string | null>(null);
     const shortcutPresentation =
       shortcut === null ? null : presentAppShortcut(shortcut, platform);
-    const formattedShortcut = shortcutPresentation?.label ?? "unassigned";
+    const formattedShortcut = shortcutPresentation?.label ?? t`unassigned`;
 
     function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
       if (!recording) return;
@@ -107,11 +110,11 @@ const ShortcutRecorder = memo(
       }
       const next = appShortcutFromInput(event, platform);
       if (next === null) {
-        setError("Press a non-modifier key.");
+        setError(t`Press a non-modifier key.`);
         return;
       }
       if (!canAssignAppShortcut(command, next)) {
-        setError("Use Command, Control, or Alt with a key.");
+        setError(t`Use Command, Control, or Alt with a key.`);
         return;
       }
       setError(null);
@@ -124,8 +127,8 @@ const ShortcutRecorder = memo(
         <Button
           aria-label={
             recording
-              ? `Recording shortcut for ${label}. Press keys or Escape to cancel.`
-              : `Record shortcut for ${label}, current shortcut ${formattedShortcut}`
+              ? t`Recording shortcut for ${label}. Press keys or Escape to cancel.`
+              : t`Record shortcut for ${label}, current shortcut ${formattedShortcut}`
           }
           aria-pressed={recording}
           className={cn(
@@ -148,9 +151,9 @@ const ShortcutRecorder = memo(
           variant="outline"
         >
           {recording ? (
-            "Press keys"
+            t`Press keys`
           ) : shortcutPresentation === null ? (
-            "Unassigned"
+            t`Unassigned`
           ) : (
             <ShortcutPill
               className={SETTINGS_SHORTCUT_PILL_CLASS}
@@ -329,6 +332,7 @@ const KeyboardCommandRow = memo(
     platform,
     recording,
   }: KeyboardCommandRowProps) {
+    const { t } = useLingui();
     const {
       availableOnClient,
       command,
@@ -345,14 +349,19 @@ const KeyboardCommandRow = memo(
       desktopDefaultShortcut !== null &&
       !areAppShortcutsEqual(webDefaultShortcut, desktopDefaultShortcut)
         ? [
-            { label: "Web", shortcut: webDefaultShortcut },
-            { label: "Desktop", shortcut: desktopDefaultShortcut },
+            { label: t`Web`, shortcut: webDefaultShortcut },
+            { label: t`Desktop`, shortcut: desktopDefaultShortcut },
           ]
         : null;
+    const defaultsCount = splitDefaults === null ? 1 : splitDefaults.length;
     const sharedDefaultShortcut =
       splitDefaults === null
         ? (webDefaultShortcut ?? desktopDefaultShortcut)
         : null;
+
+    const commandLabel = metadata.label;
+    const defaultConflictNames = model.defaultConflicts.join(", ");
+    const conflictNames = conflicts.join(", ");
 
     return (
       <div
@@ -365,19 +374,25 @@ const KeyboardCommandRow = memo(
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-1.5">
             <p className="text-sm text-foreground">{metadata.label}</p>
-            {desktopOnly ? <SettingsBadge>Desktop</SettingsBadge> : null}
-            {customized ? <SettingsBadge>Custom</SettingsBadge> : null}
+            {desktopOnly ? <SettingsBadge>{t`Desktop`}</SettingsBadge> : null}
+            {customized ? <SettingsBadge>{t`Custom`}</SettingsBadge> : null}
           </div>
           <p className="mt-0.5 text-xs leading-snug text-subtle-foreground/75">
             {metadata.description}
           </p>
           {splitDefaults !== null || sharedDefaultShortcut !== null ? (
             <div
-              aria-label={`${splitDefaults === null ? "Default shortcut" : "Default shortcuts"} for ${metadata.label}`}
+              aria-label={t`${plural(defaultsCount, {
+                one: "Default shortcut",
+                other: "Default shortcuts",
+              })} for ${commandLabel}`}
               className="mt-1.5 flex flex-wrap items-center gap-1.5"
             >
               <span className="text-xs text-subtle-foreground/75">
-                {splitDefaults === null ? "Default:" : "Defaults:"}
+                {plural(defaultsCount, {
+                  one: "Default:",
+                  other: "Defaults:",
+                })}
               </span>
               {sharedDefaultShortcut !== null ? (
                 <ShortcutPill
@@ -406,14 +421,12 @@ const KeyboardCommandRow = memo(
           ) : null}
           {model.defaultConflicts.length > 0 ? (
             <p className="mt-1 text-xs text-warning-text">
-              Default shortcut left unbound: also used by{" "}
-              {model.defaultConflicts.join(", ")}.
+              {t`Default shortcut left unbound: also used by ${defaultConflictNames}.`}
             </p>
           ) : null}
           {conflicts.length > 0 ? (
             <p className="mt-1 text-xs text-warning-text">
-              Also used by {conflicts.join(", ")}. Context determines which
-              command runs.
+              {t`Also used by ${conflictNames}. Context determines which command runs.`}
             </p>
           ) : null}
         </div>
@@ -428,7 +441,7 @@ const KeyboardCommandRow = memo(
             shortcut={shortcut}
           />
           <Button
-            aria-label={`Clear shortcut for ${metadata.label}`}
+            aria-label={t`Clear shortcut for ${commandLabel}`}
             className="size-7"
             disabled={!availableOnClient || shortcut === null}
             onClick={() => onChange(command, null)}
@@ -439,7 +452,7 @@ const KeyboardCommandRow = memo(
             <Icon name="X" className="size-3.5" />
           </Button>
           <Button
-            aria-label={`Reset shortcut for ${metadata.label}`}
+            aria-label={t`Reset shortcut for ${commandLabel}`}
             className="size-7"
             disabled={!availableOnClient || !customized}
             onClick={() => onReset(command)}
@@ -467,6 +480,7 @@ const KeyboardCommandRow = memo(
 );
 
 export function KeyboardSettingsSection() {
+  const { t } = useLingui();
   const systemConfig = useSystemConfig();
   const updateGeneralSettings = useUpdateGeneralSettings();
   const {
@@ -486,15 +500,18 @@ export function KeyboardSettingsSection() {
     () => [
       ...APP_COMMAND_GROUPS,
       {
-        label: "Plugin commands",
-        commands: commands.map((command) => ({
-          command: pluginCommandId(command.pluginId, command.id),
-          label: command.title,
-          description: `Plugin: ${command.pluginId}`,
-        })),
+        label: t`Plugin commands`,
+        commands: commands.map((command) => {
+          const pluginId = command.pluginId;
+          return {
+            command: pluginCommandId(command.pluginId, command.id),
+            label: command.title,
+            description: t`Plugin: ${pluginId}`,
+          };
+        }),
       },
     ],
-    [commands],
+    [commands, t],
   );
   const labels = useMemo(
     () =>
@@ -596,8 +613,10 @@ export function KeyboardSettingsSection() {
       .filter(({ rank }) => rank !== -1)
       .sort((left, right) => left.rank - right.rank)
       .map(({ metadata }) => metadata);
-    return commands.length === 0 ? [] : [{ label: "Search results", commands }];
-  }, [commandGroups, search, shortcutMatches]);
+    return commands.length === 0
+      ? []
+      : [{ label: t`Search results`, commands }];
+  }, [commandGroups, search, shortcutMatches, t]);
 
   const latestSettingsRef = useRef({
     defaults,
@@ -709,6 +728,14 @@ export function KeyboardSettingsSection() {
   );
   const hasOverrides = customizedCommands.length > 0;
 
+  const pendingConflictNames =
+    pendingAssignment?.conflicts.map((id) => labels.get(id) ?? id).join(", ") ??
+    "";
+  const pendingCommandName =
+    pendingAssignment === null
+      ? ""
+      : (labels.get(pendingAssignment.command) ?? pendingAssignment.command);
+
   return (
     <SettingsSection
       actionPlacement="inline"
@@ -731,19 +758,19 @@ export function KeyboardSettingsSection() {
           type="button"
           variant="outline"
         >
-          Reset all
+          {t`Reset all`}
         </Button>
       }
-      description="Click a shortcut, then press its new keys. Changes sync to every bb window."
-      title="Keyboard shortcuts"
+      description={t`Click a shortcut, then press its new keys. Changes sync to every bb window.`}
+      title={t`Keyboard shortcuts`}
     >
       <div className="space-y-5">
         <SettingsWithControl
-          description="Show shortcut badges after holding Command or Control."
-          label="Show keyboard hints when holding CMD / Control"
+          description={t`Show shortcut badges after holding Command or Control.`}
+          label={t`Show keyboard hints when holding CMD / Control`}
         >
           <Switch
-            aria-label="Show keyboard hints when holding CMD / Control"
+            aria-label={t`Show keyboard hints when holding CMD / Control`}
             checked={generalSettings.showKeyboardHints}
             disabled={systemConfig.data === undefined}
             onCheckedChange={(showKeyboardHints) =>
@@ -752,9 +779,9 @@ export function KeyboardSettingsSection() {
           />
         </SettingsWithControl>
         <Input
-          aria-label="Search keyboard shortcuts"
+          aria-label={t`Search keyboard shortcuts`}
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search shortcuts"
+          placeholder={t`Search shortcuts`}
           value={search}
         />
         {pendingAssignment !== null ? (
@@ -763,14 +790,7 @@ export function KeyboardSettingsSection() {
             className="space-y-2 rounded border border-border p-3"
           >
             <p className="text-sm">
-              Shortcut already used by{" "}
-              {pendingAssignment.conflicts
-                .map((id) => labels.get(id) ?? id)
-                .join(", ")}
-              . Replace it with{" "}
-              {labels.get(pendingAssignment.command) ??
-                pendingAssignment.command}
-              ?
+              {t`Shortcut already used by ${pendingConflictNames}. Replace it with ${pendingCommandName}?`}
             </p>
             <div className="flex gap-2">
               <Button
@@ -784,14 +804,14 @@ export function KeyboardSettingsSection() {
                 }
                 size="sm"
               >
-                Replace binding
+                {t`Replace binding`}
               </Button>
               <Button
                 onClick={() => setPendingAssignment(null)}
                 size="sm"
                 variant="outline"
               >
-                Cancel
+                {t`Cancel`}
               </Button>
             </div>
           </div>
@@ -831,7 +851,7 @@ export function KeyboardSettingsSection() {
           ))}
           {visibleGroups.length === 0 ? (
             <p className="py-6 text-center text-sm text-subtle-foreground">
-              No shortcuts match “{search}”.
+              {t`No shortcuts match “${search}”.`}
             </p>
           ) : null}
         </fieldset>

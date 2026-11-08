@@ -6,3 +6,516 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:385
+msgid "{defaultsCount, plural, one {Default shortcut} other {Default shortcuts}} for {commandLabel}"
+msgstr "{defaultsCount, plural, one {Сочетание по умолчанию} few {Сочетания по умолчанию} many {Сочетания по умолчанию} other {Сочетания по умолчанию}} для {commandLabel}"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:392
+msgid "{defaultsCount, plural, one {Default:} other {Defaults:}}"
+msgstr "{defaultsCount, plural, one {По умолчанию:} few {По умолчанию:} many {По умолчанию:} other {По умолчанию:}}"
+
+#: src/lib/command-palette/palette-settings-actions.ts:28
+#: src/lib/command-palette/palette-settings-actions.ts:39
+msgid "{label} settings"
+msgstr "Настройки: {label}"
+
+#: src/components/settings/settings-sections.ts:9
+msgid "AI services"
+msgstr "AI-сервисы"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:429
+msgid "Also used by {conflictNames}. Context determines which command runs."
+msgstr "Также используется для: {conflictNames}. Какая команда выполнится, зависит от контекста."
+
+#: src/components/settings/settings-search.ts:106
+msgid "analytics"
+msgstr "аналитика"
+
+#: src/components/settings/settings-sections.ts:10
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: src/components/settings/settings-sections.ts:27
+msgid "Archived threads"
+msgstr "Архивные треды"
+
+#: src/views/SettingsView.tsx:1000
+msgid "Ask before archiving a thread with unarchived child threads."
+msgstr "Спрашивать перед архивацией треда, у которого есть неархивированные дочерние треды."
+
+#: src/views/SettingsView.tsx:1087
+msgid "Automatically copy selected terminal text and show a notification. Does not affect text elsewhere in the app. Linux middle-click paste uses the primary selection independently."
+msgstr "Автоматически копировать выделенный в терминале текст и показывать уведомление. Не влияет на текст в остальных местах приложения. Вставка средней кнопкой мыши в Linux использует primary selection независимо от этой настройки."
+
+#: src/components/settings/settings-search.ts:54
+msgid "background"
+msgstr "фон"
+
+#: src/views/SettingsView.tsx:658
+msgid "bb puts this in front of every branch it creates for a worktree, such as {draft}{MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG}. Leave it empty for no prefix."
+msgstr "bb ставит его перед именем каждой ветки, которую создаёт для worktree, например {draft}{MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG}. Оставьте пустым, чтобы не добавлять префикс."
+
+#: src/components/settings/settings-search.ts:88
+msgid "branch name"
+msgstr "имя ветки"
+
+#: src/components/settings/settings-sections.ts:12
+msgid "Browser"
+msgstr "Браузер"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:812
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/components/settings/settings-search.ts:62
+msgid "child threads"
+msgstr "дочерние треды"
+
+#: src/components/settings/settings-search.ts:66
+msgid "clear context"
+msgstr "очистка контекста"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:444
+msgid "Clear shortcut for {commandLabel}"
+msgstr "Очистить сочетание для «{commandLabel}»"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:762
+msgid "Click a shortcut, then press its new keys. Changes sync to every bb window."
+msgstr "Нажмите на сочетание, затем нажмите новые клавиши. Изменения синхронизируются во всех окнах bb."
+
+#: src/components/settings/settings-sections.ts:26
+msgid "Community"
+msgstr "Сообщество"
+
+#: src/components/settings/settings-search.ts:62
+msgid "confirm"
+msgstr "подтверждение"
+
+#: src/views/SettingsView.tsx:901
+msgid "Copy on select"
+msgstr "Копировать при выделении"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:378
+msgid "Custom"
+msgstr "Своё"
+
+#: src/components/settings/settings-search.ts:110
+msgid "debug"
+msgstr "отладка"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:424
+msgid "Default shortcut left unbound: also used by {defaultConflictNames}."
+msgstr "Сочетание по умолчанию не назначено: оно также используется для {defaultConflictNames}."
+
+#: src/components/settings/settings-search.ts:57
+#: src/views/SettingsView.tsx:895
+msgid "Default thread followup behavior"
+msgstr "Поведение дополнений к треду по умолчанию"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:353
+#: src/components/settings/KeyboardSettingsSection.tsx:377
+msgid "Desktop"
+msgstr "Десктоп"
+
+#: src/views/SettingsView.tsx:1012
+msgid "Earlier messages stay in the thread for you to read. The agent doesn't see them."
+msgstr "Прежние сообщения остаются в треде, и вы можете их читать. Агент их не видит."
+
+#: src/views/SettingsView.tsx:613
+msgid "English"
+msgstr "Английский"
+
+#: src/components/settings/settings-search.ts:58
+msgid "enter"
+msgstr "enter"
+
+#: src/views/SettingsView.tsx:604
+msgid "Enter adds a follow-up. It runs when the agent stops. Command+Enter (Ctrl+Enter on Windows and Linux) steers the run."
+msgstr "Enter добавляет дополнение: оно выполнится, когда агент остановится. Command+Enter (Ctrl+Enter в Windows и Linux) направляет текущий запуск."
+
+#: src/views/SettingsView.tsx:609
+msgid "Enter steers the run now. Command+Enter (Ctrl+Enter on Windows and Linux) adds a follow-up for later."
+msgstr "Enter направляет текущий запуск сразу. Command+Enter (Ctrl+Enter в Windows и Linux) добавляет дополнение на потом."
+
+#: src/components/settings/settings-sections.ts:20
+msgid "Environment variables"
+msgstr "Переменные окружения"
+
+#: src/components/settings/settings-sections.ts:25
+msgid "Experiments"
+msgstr "Эксперименты"
+
+#: src/components/settings/settings-sections.ts:13
+msgid "Files"
+msgstr "Файлы"
+
+#: src/components/settings/settings-search.ts:58
+msgid "follow-up"
+msgstr "дополнение"
+
+#: src/components/settings/settings-sections.ts:7
+msgid "General"
+msgstr "Общие"
+
+#: src/components/settings/settings-search.ts:70
+msgid "getting started"
+msgstr "начало работы"
+
+#: src/components/settings/settings-search.ts:88
+msgid "git"
+msgstr "git"
+
+#: src/components/settings/settings-search.ts:102
+msgid "hide models"
+msgstr "скрыть модели"
+
+#: src/views/SettingsView.tsx:1128
+msgid "Hide the custom models from config.json in every model picker, so a screen share does not show them."
+msgstr "Скрывать пользовательские модели из config.json во всех списках моделей, чтобы они не попали в демонстрацию экрана."
+
+#: src/components/settings/settings-search.ts:66
+msgid "history"
+msgstr "история"
+
+#: src/components/settings/settings-sections.ts:23
+msgid "Installed plugins"
+msgstr "Установленные плагины"
+
+#: src/components/settings/settings-search.ts:50
+msgid "interface"
+msgstr "интерфейс"
+
+#: src/views/SettingsView.tsx:917
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: src/components/settings/settings-sections.ts:11
+msgid "Keyboard"
+msgstr "Клавиатура"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:763
+msgid "Keyboard shortcuts"
+msgstr "Сочетания клавиш"
+
+#: src/components/settings/settings-search.ts:49
+#: src/views/SettingsView.tsx:902
+msgid "Language"
+msgstr "Язык"
+
+#: src/views/SettingsView.tsx:920
+msgid "Language of the bb interface."
+msgstr "Язык интерфейса bb."
+
+#: src/views/SettingsView.tsx:1050
+msgid "Links"
+msgstr "Ссылки"
+
+#: src/components/settings/settings-search.ts:50
+msgid "locale"
+msgstr "локаль"
+
+#: src/components/settings/settings-search.ts:110
+msgid "logs"
+msgstr "логи"
+
+#: src/components/settings/settings-sections.ts:15
+msgid "Machines"
+msgstr "Машины"
+
+#: src/components/settings/settings-sections.ts:16
+msgid "Mobile"
+msgstr "Мобильное приложение"
+
+#: src/components/settings/settings-search.ts:53
+#: src/views/SettingsView.tsx:894
+msgid "Navigate to threads on creation"
+msgstr "Переходить в тред после создания"
+
+#: src/components/settings/settings-search.ts:87
+#: src/views/SettingsView.tsx:634
+msgid "New branch prefix"
+msgstr "Префикс новых веток"
+
+#: src/components/settings/settings-search.ts:54
+msgid "new thread"
+msgstr "новый тред"
+
+#: src/views/SettingsView.tsx:672
+msgid "No prefix"
+msgstr "Без префикса"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:852
+msgid "No shortcuts match “{search}”."
+msgstr "Нет сочетаний, подходящих под «{search}»."
+
+#: src/components/settings/settings-search.ts:70
+msgid "onboarding"
+msgstr "онбординг"
+
+#: src/components/settings/settings-search.ts:54
+msgid "open"
+msgstr "открыть"
+
+#: src/components/settings/settings-search.ts:77
+#: src/views/SettingsView.tsx:899
+msgid "Open links in the in-app browser"
+msgstr "Открывать ссылки во встроенном браузере"
+
+#: src/views/SettingsView.tsx:1055
+msgid "Open web links inside bb."
+msgstr "Открывать веб-ссылки внутри bb."
+
+#: src/components/settings/KeyboardSettingsSection.tsx:503
+msgid "Plugin commands"
+msgstr "Команды плагинов"
+
+#: src/components/settings/settings-sections.ts:24
+msgid "Plugin marketplaces"
+msgstr "Каталоги плагинов"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:509
+msgid "Plugin: {pluginId}"
+msgstr "Плагин: {pluginId}"
+
+#: src/components/settings/settings-search.ts:83
+msgid "port"
+msgstr "порт"
+
+#: src/components/settings/settings-search.ts:46
+msgid "preferences"
+msgstr "настройки"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:113
+msgid "Press a non-modifier key."
+msgstr "Нажмите клавишу, не являющуюся модификатором."
+
+#: src/components/settings/KeyboardSettingsSection.tsx:154
+msgid "Press keys"
+msgstr "Нажмите клавиши"
+
+#: src/components/settings/settings-search.ts:102
+#: src/components/settings/settings-search.ts:106
+msgid "privacy"
+msgstr "приватность"
+
+#: src/views/SettingsView.tsx:1124
+msgid "Privacy & diagnostics"
+msgstr "Конфиденциальность и диагностика"
+
+#: src/components/settings/settings-sections.ts:14
+msgid "Projects"
+msgstr "Проекты"
+
+#: src/components/settings/settings-sections.ts:8
+msgid "Providers"
+msgstr "Провайдеры"
+
+#: src/components/settings/settings-search.ts:58
+msgid "queue"
+msgstr "очередь"
+
+#: src/views/SettingsView.tsx:603
+#: src/views/SettingsView.tsx:958
+msgid "Queue"
+msgstr "В очередь"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:131
+msgid "Record shortcut for {label}, current shortcut {formattedShortcut}"
+msgstr "Записать сочетание для «{label}», текущее сочетание: {formattedShortcut}"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:130
+msgid "Recording shortcut for {label}. Press keys or Escape to cancel."
+msgstr "Запись сочетания для «{label}». Нажмите клавиши или Escape для отмены."
+
+#: src/components/settings/settings-search.ts:83
+msgid "remote"
+msgstr "удалённый"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:805
+msgid "Replace binding"
+msgstr "Заменить назначение"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:759
+msgid "Reset all"
+msgstr "Сбросить все"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:455
+msgid "Reset shortcut for {commandLabel}"
+msgstr "Сбросить сочетание для «{commandLabel}»"
+
+#: src/components/settings/settings-search.ts:82
+#: src/views/SettingsView.tsx:900
+msgid "Rewrite localhost links"
+msgstr "Переписывать localhost-ссылки"
+
+#: src/views/SettingsView.tsx:614
+msgid "Russian"
+msgstr "Русский"
+
+#: src/components/settings/settings-search.ts:102
+msgid "screen share"
+msgstr "демонстрация экрана"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:780
+msgid "Search keyboard shortcuts"
+msgstr "Поиск сочетаний клавиш"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:616
+msgid "Search results"
+msgstr "Результаты поиска"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:782
+msgid "Search shortcuts"
+msgstr "Поиск сочетаний"
+
+#: src/views/SettingsView.tsx:1140
+msgid "Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server."
+msgstr "Отправлять анонимные данные об использовании, например запуски приложения, ход настройки и использование функций, чтобы помочь улучшать bb. Выключение вступает в силу сразу для этого сервера."
+
+#: src/components/settings/settings-search.ts:69
+#: src/views/SettingsView.tsx:1035
+msgid "Setup guide"
+msgstr "Мастер настройки"
+
+#: src/components/settings/settings-search.ts:105
+#: src/views/SettingsView.tsx:1121
+msgid "Share anonymous usage data"
+msgstr "Отправлять анонимные данные об использовании"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:791
+msgid "Shortcut already used by {pendingConflictNames}. Replace it with {pendingCommandName}?"
+msgstr "Сочетание уже используется для: {pendingConflictNames}. Заменить на «{pendingCommandName}»?"
+
+#: src/components/settings/settings-search.ts:109
+#: src/views/SettingsView.tsx:1122
+msgid "Show diagnostic events"
+msgstr "Показывать диагностические события"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:768
+#: src/components/settings/KeyboardSettingsSection.tsx:771
+msgid "Show keyboard hints when holding CMD / Control"
+msgstr "Показывать подсказки клавиш при удержании CMD / Control"
+
+#: src/components/settings/settings-search.ts:65
+#: src/views/SettingsView.tsx:897
+msgid "Show messages from before a context clear"
+msgstr "Показывать сообщения до очистки контекста"
+
+#: src/views/SettingsView.tsx:1152
+msgid "Show provider environment resolution and unhandled provider events for troubleshooting."
+msgstr "Показывать определение окружения провайдера и необработанные события провайдера для диагностики."
+
+#: src/views/SettingsView.tsx:1045
+msgid "Show setup guide"
+msgstr "Показать мастер настройки"
+
+#: src/views/SettingsView.tsx:1024
+msgid "Show short summaries for commands that read, list, or search files. Turn off to show command text and let you expand each command to view its output."
+msgstr "Показывать краткое описание команд, которые читают, перечисляют или ищут файлы. Выключите, чтобы видеть текст команд и раскрывать каждую, чтобы посмотреть её вывод."
+
+#: src/components/settings/KeyboardSettingsSection.tsx:767
+msgid "Show shortcut badges after holding Command or Control."
+msgstr "Показывать значки сочетаний после удержания Command или Control."
+
+#: src/components/settings/settings-search.ts:58
+msgid "steer"
+msgstr "направить"
+
+#: src/views/SettingsView.tsx:608
+#: src/views/SettingsView.tsx:958
+msgid "Steer"
+msgstr "Направить"
+
+#: src/components/settings/settings-search.ts:101
+#: src/views/SettingsView.tsx:1120
+msgid "Streamer mode"
+msgstr "Режим стримера"
+
+#: src/views/SettingsView.tsx:898
+msgid "Summarize shell commands"
+msgstr "Кратко описывать shell-команды"
+
+#: src/components/settings/settings-search.ts:106
+msgid "telemetry"
+msgstr "телеметрия"
+
+#: src/views/SettingsView.tsx:1084
+msgid "Terminals"
+msgstr "Терминалы"
+
+#: src/views/SettingsView.tsx:661
+msgid "This prefix cannot start a valid git branch name."
+msgstr "С такого префикса не может начинаться допустимое имя git-ветки."
+
+#: src/components/settings/settings-search.ts:61
+#: src/views/SettingsView.tsx:896
+msgid "Thread archive confirmation"
+msgstr "Подтверждение архивации треда"
+
+#: src/views/SettingsView.tsx:935
+msgid "Threads & editing"
+msgstr "Треды и редактирование"
+
+#: src/components/settings/settings-search.ts:50
+msgid "translation"
+msgstr "перевод"
+
+#: src/components/settings/settings-search.ts:110
+msgid "troubleshooting"
+msgstr "диагностика"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:100
+msgid "unassigned"
+msgstr "не назначено"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:156
+msgid "Unassigned"
+msgstr "Не назначено"
+
+#: src/components/settings/settings-sections.ts:22
+msgid "Updates"
+msgstr "Обновления"
+
+#: src/components/settings/settings-search.ts:78
+#: src/components/settings/settings-search.ts:83
+msgid "url"
+msgstr "url"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:117
+msgid "Use Command, Control, or Alt with a key."
+msgstr "Используйте Command, Control или Alt вместе с клавишей."
+
+#: src/views/SettingsView.tsx:1036
+msgid "Walk through connecting an agent, adding projects, plugins, and devices again."
+msgstr "Пройти заново подключение агента и добавление проектов, плагинов и устройств."
+
+#: src/components/settings/settings-search.ts:78
+msgid "web"
+msgstr "веб"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:352
+msgid "Web"
+msgstr "Веб"
+
+#: src/components/settings/settings-search.ts:70
+msgid "welcome"
+msgstr "приветствие"
+
+#: src/views/SettingsView.tsx:947
+msgid "What Enter does in the prompt box while the thread runs."
+msgstr "Что делает Enter в поле ввода, пока тред выполняется."
+
+#: src/views/SettingsView.tsx:911
+msgid "When enabled, localhost URLs are rewritten to use the same host or IP address you use to open BB. For example: {exampleHref} → {rewrittenHref}"
+msgstr "Когда настройка включена, localhost-адреса переписываются на тот же хост или IP-адрес, по которому вы открываете BB. Например: {exampleHref} → {rewrittenHref}"
+
+#: src/components/settings/settings-search.ts:88
+msgid "worktree"
+msgstr "worktree"

@@ -2,6 +2,8 @@ import { useEffect, useMemo, type ReactNode } from "react";
 import type { GlobalProvider } from "@ladle/react";
 import { ThemeState } from "@ladle/react";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { I18nProvider } from "@lingui/react";
+import { i18n } from "../src/i18n/i18n";
 import { WorkerPoolContextProvider } from "@pierre/diffs/react";
 import { Provider as JotaiProvider, createStore } from "jotai";
 import { MemoryRouter } from "react-router-dom";
@@ -89,29 +91,31 @@ export const Provider: GlobalProvider = ({
   );
 
   return (
-    <MemoryRouter initialEntries={["/"]}>
-      <RouteNavigationProvider>
-        <JotaiProvider store={store}>
-          <QueryClientProvider client={queryClient}>
-            <WorkerPoolContextProvider
-              poolOptions={{
-                workerFactory: createDiffWorker,
-                poolSize: getDiffWorkerPoolSize(),
-              }}
-              highlighterOptions={{}}
-            >
-              <TooltipProvider delayDuration={300} disableHoverableContent>
-                <div className="min-h-screen text-foreground">
-                  <StoryModelPickerCatalog storyMeta={storyMeta}>
-                    {children}
-                  </StoryModelPickerCatalog>
-                  <AppToaster />
-                </div>
-              </TooltipProvider>
-            </WorkerPoolContextProvider>
-          </QueryClientProvider>
-        </JotaiProvider>
-      </RouteNavigationProvider>
-    </MemoryRouter>
+    <I18nProvider i18n={i18n}>
+      <MemoryRouter initialEntries={["/"]}>
+        <RouteNavigationProvider>
+          <JotaiProvider store={store}>
+            <QueryClientProvider client={queryClient}>
+              <WorkerPoolContextProvider
+                poolOptions={{
+                  workerFactory: createDiffWorker,
+                  poolSize: getDiffWorkerPoolSize(),
+                }}
+                highlighterOptions={{}}
+              >
+                <TooltipProvider delayDuration={300} disableHoverableContent>
+                  <div className="min-h-screen text-foreground">
+                    <StoryModelPickerCatalog storyMeta={storyMeta}>
+                      {children}
+                    </StoryModelPickerCatalog>
+                    <AppToaster />
+                  </div>
+                </TooltipProvider>
+              </WorkerPoolContextProvider>
+            </QueryClientProvider>
+          </JotaiProvider>
+        </RouteNavigationProvider>
+      </MemoryRouter>
+    </I18nProvider>
   );
 };

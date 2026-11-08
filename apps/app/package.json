@@ -12,7 +12,7 @@
     "clean": "rimraf dist bundle-stats.json",
     "storybook": "ladle serve",
     "storybook:build": "ladle build",
-    "lint": "oxlint src vite.config.ts vite.dev.config.ts vite-bundle-stats.ts vite-font-preload.ts vite-split-prefetch.ts vite-forkable-plugin-paths.ts vite-shared-ui-seam.ts vite-react-compiler.ts vite-journey-chunks.ts vite-plugin-zod-runtime.ts",
+    "lint": "oxlint src vite.config.ts vite.dev.config.ts vite-bundle-stats.ts vite-font-preload.ts vite-split-prefetch.ts vite-forkable-plugin-paths.ts vite-shared-ui-seam.ts vite-react-compiler.ts vite-journey-chunks.ts vite-plugin-zod-runtime.ts vite-lingui-macro.ts && node scripts/i18n-catalog-gate.mjs",
     "i18n:extract": "lingui extract --clean",
     "i18n:gate": "node scripts/i18n-catalog-gate.mjs",
     "typecheck": "tsrs --noEmit && tsrs --noEmit -p tsconfig.node.json",

@@ -5,7 +5,7 @@ import {
 } from "@/hooks/queries/system-queries";
 import { useLocalHostDaemonAccess } from "@/hooks/useHostDaemon";
 import { isDesktopBrowserAvailable } from "@/lib/bb-desktop";
-import { localhostLinkRewriteDescription } from "@/lib/localhost-link-rewrite-description";
+import { localhostLinkRewriteExample } from "@/lib/localhost-link-rewrite-description";
 import { usePluginSlots } from "@/lib/plugin-slots";
 import type { SettingsSearchCondition } from "./settings-search";
 
@@ -27,7 +27,7 @@ export function useSettingsSearchConditions(): ReadonlySet<SettingsSearchConditi
   const [desktopBrowserAvailable] = useState(isDesktopBrowserAvailable);
   const [rewritesLocalhostLinks] = useState(
     () =>
-      localhostLinkRewriteDescription(
+      localhostLinkRewriteExample(
         typeof window === "undefined" ? undefined : window.location.hostname,
       ) !== null,
   );

@@ -8,6 +8,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   type RefObject,
 } from "react";
+import { useLingui } from "@lingui/react/macro";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@bb/shared-ui/button";
 import {
@@ -300,6 +301,7 @@ export function SettingsSidebarContent({
 }: SettingsSidebarContentProps) {
   const { activePluginId, activeSection, pluginEntries, sections } = navigation;
   const hasPlugins = pluginEntries.length > 0;
+  const { t } = useLingui();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const closeOnMobile = useCloseMobileSidebar();
@@ -314,8 +316,9 @@ export function SettingsSidebarContent({
         pluginEntries,
         pluginSettings: pluginSettingSearch.entries,
         sections,
+        translate: t,
       }),
-    [pluginEntries, pluginSettingSearch.entries, searchConditions, sections],
+    [t, pluginEntries, pluginSettingSearch.entries, searchConditions, sections],
   );
   const results = useMemo(
     () => searchSettings(query, searchItems),
@@ -420,7 +423,7 @@ export function SettingsSidebarContent({
                 <SectionSidebarRow
                   key={section.id}
                   active={activeSection === section.id}
-                  label={section.label}
+                  label={t(section.label)}
                   to={getSettingsSectionRoutePath(section.id)}
                 >
                   <SectionSidebarIcon name={section.icon} />
@@ -478,7 +481,7 @@ export function SettingsSidebarContent({
                     <SectionSidebarRow
                       key={section.id}
                       active={activeSection === section.id}
-                      label={section.label}
+                      label={t(section.label)}
                       to={getSettingsSectionRoutePath(section.id)}
                     >
                       <SectionSidebarIcon name={section.icon} />

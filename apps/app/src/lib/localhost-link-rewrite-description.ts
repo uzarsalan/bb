@@ -2,9 +2,14 @@ import { rewriteLocalhostLinkHref } from "@bb/client-core";
 
 const EXAMPLE_HREF = "http://localhost:3000/";
 
-export function localhostLinkRewriteDescription(
+export interface LocalhostLinkRewriteExample {
+  href: string;
+  rewrittenHref: string;
+}
+
+export function localhostLinkRewriteExample(
   currentHostname: string | undefined,
-): string | null {
+): LocalhostLinkRewriteExample | null {
   if (currentHostname === undefined) {
     return null;
   }
@@ -14,9 +19,9 @@ export function localhostLinkRewriteDescription(
     enabled: true,
     href: EXAMPLE_HREF,
   });
-  if (rewrittenHref === EXAMPLE_HREF) {
+  if (rewrittenHref === undefined || rewrittenHref === EXAMPLE_HREF) {
     return null;
   }
 
-  return `When enabled, localhost URLs are rewritten to use the same host or IP address you use to open BB. For example: ${EXAMPLE_HREF} → ${rewrittenHref}`;
+  return { href: EXAMPLE_HREF, rewrittenHref };
 }

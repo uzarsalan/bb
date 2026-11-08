@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { resolveCurrentDevInstanceConfig } from "@bb/config/runtime";
 import { forkablePluginPaths } from "../vite-forkable-plugin-paths.js";
 import { sharedUiEnvSeam } from "../vite-shared-ui-seam.js";
+import { lingui } from "@lingui/vite-plugin";
+import { linguiMacro } from "../vite-lingui-macro.js";
 
 const repoRoot = path.resolve(__dirname, "../../..");
 const devInstance = resolveCurrentDevInstanceConfig(repoRoot);
@@ -15,6 +17,8 @@ export default defineConfig({
   plugins: [
     forkablePluginPaths(path.resolve(__dirname, "../src")),
     sharedUiEnvSeam(),
+    lingui({ configPath: path.resolve(__dirname, "../lingui.config.ts") }),
+    linguiMacro(),
     tailwindcss(),
   ],
   cacheDir: "node_modules/.vite/ladle",

@@ -21,6 +21,7 @@ import {
   type RankedPaletteAction,
 } from "@/lib/command-palette/palette-ranking";
 import { usePluginSlots } from "@/lib/plugin-slots";
+import { useLingui } from "@lingui/react/macro";
 import { buildSettingsPaletteActions } from "@/lib/command-palette/palette-settings-actions";
 import { buildPluginPagePaletteActions } from "@/lib/command-palette/palette-plugin-page-actions";
 import {
@@ -54,6 +55,7 @@ export function CommandPaletteBody({
   onQueryChange,
   onChoose,
 }: CommandPaletteBodyProps) {
+  const { t } = useLingui();
   const navigate = useNavigate();
   const isCompactViewport = useIsCompactViewport();
   const listId = useId();
@@ -75,8 +77,9 @@ export function CommandPaletteBody({
         navigate: (path) => void navigate(path),
         pluginEntries: pluginSettingsEntries,
         sections: settingsSections,
+        translate: t,
       }),
-    [navigate, pluginSettingsEntries, settingsSections],
+    [t, navigate, pluginSettingsEntries, settingsSections],
   );
   const pluginPageActions = useMemo(
     () =>

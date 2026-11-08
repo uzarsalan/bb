@@ -1,3 +1,5 @@
+import { msg } from "@lingui/core/macro";
+import type { MessageDescriptor } from "@lingui/core";
 import type { IconName } from "@bb/shared-ui/icon";
 import { getPluginConfigurationRoutePath } from "@/lib/route-paths";
 import type { PluginSettingsEntry } from "./plugin-settings-entries";
@@ -21,14 +23,18 @@ export type SettingsSearchCondition =
   | "sourceCodeRenderers"
   | "threadLists";
 
+type SettingsSearchText = string | MessageDescriptor;
+
+export type SettingsSearchTranslate = (message: MessageDescriptor) => string;
+
 interface SettingsSearchSetting {
-  keywords: readonly string[];
-  title: string;
+  keywords: readonly SettingsSearchText[];
+  title: SettingsSearchText;
   when?: SettingsSearchCondition;
 }
 
 interface SettingsSearchSection {
-  keywords: readonly string[];
+  keywords: readonly SettingsSearchText[];
   settings: readonly SettingsSearchSetting[];
 }
 
@@ -37,27 +43,31 @@ export const SETTINGS_SEARCH_INDEX: Record<
   SettingsSearchSection
 > = {
   general: {
-    keywords: ["preferences"],
+    keywords: [msg`preferences`],
     settings: [
       {
-        title: "Navigate to threads on creation",
-        keywords: ["new thread", "open", "background"],
+        title: msg`Language`,
+        keywords: [msg`locale`, msg`interface`, msg`translation`],
       },
       {
-        title: "Default thread followup behavior",
-        keywords: ["enter", "steer", "queue", "follow-up"],
+        title: msg`Navigate to threads on creation`,
+        keywords: [msg`new thread`, msg`open`, msg`background`],
       },
       {
-        title: "Thread archive confirmation",
-        keywords: ["confirm", "child threads"],
+        title: msg`Default thread followup behavior`,
+        keywords: [msg`enter`, msg`steer`, msg`queue`, msg`follow-up`],
       },
       {
-        title: "Show messages from before a context clear",
-        keywords: ["history", "clear context"],
+        title: msg`Thread archive confirmation`,
+        keywords: [msg`confirm`, msg`child threads`],
       },
       {
-        title: "Setup guide",
-        keywords: ["onboarding", "getting started", "welcome"],
+        title: msg`Show messages from before a context clear`,
+        keywords: [msg`history`, msg`clear context`],
+      },
+      {
+        title: msg`Setup guide`,
+        keywords: [msg`onboarding`, msg`getting started`, msg`welcome`],
       },
       {
         title: "App links",
@@ -75,18 +85,18 @@ export const SETTINGS_SEARCH_INDEX: Record<
         ],
       },
       {
-        title: "Open links in the in-app browser",
-        keywords: ["url", "web"],
+        title: msg`Open links in the in-app browser`,
+        keywords: [msg`url`, msg`web`],
         when: "desktopBrowser",
       },
       {
-        title: "Rewrite localhost links",
-        keywords: ["url", "port", "remote"],
+        title: msg`Rewrite localhost links`,
+        keywords: [msg`url`, msg`port`, msg`remote`],
         when: "localhostLinkRewrite",
       },
       {
-        title: "New branch prefix",
-        keywords: ["git", "worktree", "branch name"],
+        title: msg`New branch prefix`,
+        keywords: [msg`git`, msg`worktree`, msg`branch name`],
       },
       {
         title: "bb CLI",
@@ -99,16 +109,16 @@ export const SETTINGS_SEARCH_INDEX: Record<
         keywords: ["voice input", "audio", "dictation", "speech"],
       },
       {
-        title: "Streamer mode",
-        keywords: ["privacy", "screen share", "hide models"],
+        title: msg`Streamer mode`,
+        keywords: [msg`privacy`, msg`screen share`, msg`hide models`],
       },
       {
-        title: "Share anonymous usage data",
-        keywords: ["privacy", "telemetry", "analytics"],
+        title: msg`Share anonymous usage data`,
+        keywords: [msg`privacy`, msg`telemetry`, msg`analytics`],
       },
       {
-        title: "Show diagnostic events",
-        keywords: ["debug", "troubleshooting", "logs"],
+        title: msg`Show diagnostic events`,
+        keywords: [msg`debug`, msg`troubleshooting`, msg`logs`],
       },
     ],
   },
@@ -309,24 +319,28 @@ interface BuildSettingsSearchItemsArgs {
   pluginEntries: readonly PluginSettingsEntry[];
   pluginSettings: readonly PluginSettingSearchEntry[];
   sections: readonly SettingsNavSection[];
+  translate: SettingsSearchTranslate;
 }
 
 export function buildSettingsSearchItems(
   args: BuildSettingsSearchItemsArgs,
 ): SettingsSearchItem[] {
+  const text = (value: SettingsSearchText): string =>
+    typeof value === "string" ? value : args.translate(value);
   return [
     ...args.sections.flatMap((section) => {
       const indexed = SETTINGS_SEARCH_INDEX[section.id];
       const icon = { kind: "section" as const, name: section.icon };
       const to = getSettingsSectionRoutePath(section.id);
+      const sectionLabel = args.translate(section.label);
       return [
         {
           anchor: null,
           context: null,
           icon,
           id: `section:${section.id}`,
-          keywords: indexed.keywords,
-          title: section.label,
+          keywords: indexed.keywords.map(text),
+          title: sectionLabel,
           to,
         },
         ...indexed.settings
@@ -334,15 +348,18 @@ export function buildSettingsSearchItems(
             (setting) =>
               setting.when === undefined || args.conditions.has(setting.when),
           )
-          .map((setting) => ({
-            anchor: setting.title,
-            context: section.label,
-            icon,
-            id: `setting:${section.id}:${setting.title}`,
-            keywords: setting.keywords,
-            title: setting.title,
-            to,
-          })),
+          .map((setting) => {
+            const title = text(setting.title);
+            return {
+              anchor: title,
+              context: sectionLabel,
+              icon,
+              id: `setting:${section.id}:${title}`,
+              keywords: setting.keywords.map(text),
+              title,
+              to,
+            };
+          }),
       ];
     }),
     ...args.pluginEntries.flatMap((plugin) => {

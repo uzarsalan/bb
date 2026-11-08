@@ -2,6 +2,9 @@ import { ApplicationLinkApprovalsSettings } from "@/components/settings/Applicat
 import { MobileAppSection } from "@/components/settings/MobileAppSection";
 import { MachineEnvironmentSettings } from "@/components/settings/MachineEnvironmentSettings";
 import { MachineAccessSettings } from "@/components/settings/MachineAccessSettings";
+import { useLingui } from "@lingui/react/macro";
+import { msg } from "@lingui/core/macro";
+import type { MessageDescriptor } from "@lingui/core";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Navigate,
@@ -92,7 +95,9 @@ import {
 } from "@/lib/favicon-color-preference";
 import { useOpenLinksInAppBrowserPreference } from "@/lib/in-app-browser-link-preference";
 import { useRewriteLocalhostLinksPreference } from "@/lib/localhost-link-rewrite-preference";
-import { localhostLinkRewriteDescription } from "@/lib/localhost-link-rewrite-description";
+import { localhostLinkRewriteExample } from "@/lib/localhost-link-rewrite-description";
+import { ChoiceDropdownSetting } from "@/components/settings/ChoiceDropdownSetting";
+import type { AppLanguage } from "@/i18n/locales";
 import {
   SETTINGS_ROUTE_PATH,
   getRootComposeRoutePath,
@@ -178,6 +183,8 @@ interface GeneralSettingsSectionProps {
   onSummarizeShellCommandsChange: (enabled: boolean) => void;
   desktopBrowserAvailable: boolean;
   generalSettingsDisabled: boolean;
+  language: AppLanguage;
+  onLanguageChange: (language: AppLanguage) => void;
   managedBranchPrefix: string;
   navigateToThreadAfterCreate: boolean;
   onManagedBranchPrefixChange: (prefix: string) => Promise<void> | void;
@@ -590,28 +597,26 @@ export function LocalOpenTargetSettingsSection({
   );
 }
 
-const IN_APP_BROWSER_LINK_SETTING_LABEL = "Open links in the in-app browser";
-const REWRITE_LOCALHOST_LINKS_SETTING_LABEL = "Rewrite localhost links";
-const NAVIGATE_TO_THREAD_AFTER_CREATE_SETTING_LABEL =
-  "Navigate to threads on creation";
-const DIAGNOSTIC_EVENTS_SETTING_LABEL = "Show diagnostic events";
-const FOLLOW_UP_BEHAVIOR_SETTING_LABEL = "Default thread followup behavior";
 const FOLLOW_UP_BEHAVIOR_OPTIONS = [
   {
     steerOnEnter: false,
-    label: "Queue",
-    description:
-      "Enter adds a follow-up. It runs when the agent stops. Command+Enter (Ctrl+Enter on Windows and Linux) steers the run.",
+    label: msg`Queue`,
+    description: msg`Enter adds a follow-up. It runs when the agent stops. Command+Enter (Ctrl+Enter on Windows and Linux) steers the run.`,
   },
   {
     steerOnEnter: true,
-    label: "Steer",
-    description:
-      "Enter steers the run now. Command+Enter (Ctrl+Enter on Windows and Linux) adds a follow-up for later.",
+    label: msg`Steer`,
+    description: msg`Enter steers the run now. Command+Enter (Ctrl+Enter on Windows and Linux) adds a follow-up for later.`,
   },
 ] as const;
-const STREAMER_MODE_SETTING_LABEL = "Streamer mode";
-const MANAGED_BRANCH_PREFIX_SETTING_LABEL = "New branch prefix";
+const LANGUAGE_OPTIONS = [
+  { key: "en", title: "English", description: msg`English` },
+  { key: "ru", title: "Русский", description: msg`Russian` },
+] as const satisfies ReadonlyArray<{
+  key: AppLanguage;
+  title: string;
+  description: MessageDescriptor;
+}>;
 const MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG = "fix-login-flow-thr_ab12cd34ef";
 
 interface ManagedBranchPrefixSettingProps {
@@ -625,6 +630,8 @@ function ManagedBranchPrefixSetting({
   onChange,
   value,
 }: ManagedBranchPrefixSettingProps) {
+  const { t } = useLingui();
+  const label = t`New branch prefix`;
   const [draft, setDraft] = useState(value);
   const [committedValue, setCommittedValue] = useState(value);
   if (value !== committedValue) {
@@ -645,13 +652,13 @@ function ManagedBranchPrefixSetting({
 
   return (
     <SettingsWithControl
-      label={MANAGED_BRANCH_PREFIX_SETTING_LABEL}
+      label={label}
       description={
         valid ? (
-          `bb puts this in front of every branch it creates for a worktree, such as ${draft}${MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG}. Leave it empty for no prefix.`
+          t`bb puts this in front of every branch it creates for a worktree, such as ${draft}${MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG}. Leave it empty for no prefix.`
         ) : (
           <span className="text-destructive" role="alert">
-            This prefix cannot start a valid git branch name.
+            {t`This prefix cannot start a valid git branch name.`}
           </span>
         )
       }
@@ -659,10 +666,10 @@ function ManagedBranchPrefixSetting({
     >
       <Input
         value={draft}
-        aria-label={MANAGED_BRANCH_PREFIX_SETTING_LABEL}
+        aria-label={label}
         aria-invalid={!valid}
         disabled={disabled}
-        placeholder="No prefix"
+        placeholder={t`No prefix`}
         className={cn(
           "h-8 font-mono text-xs",
           !valid && "border-destructive focus-visible:ring-destructive",
@@ -867,6 +874,8 @@ export function GeneralSettingsSection({
   onSummarizeShellCommandsChange,
   desktopBrowserAvailable,
   generalSettingsDisabled,
+  language,
+  onLanguageChange,
   managedBranchPrefix,
   navigateToThreadAfterCreate,
   onManagedBranchPrefixChange,
@@ -881,26 +890,61 @@ export function GeneralSettingsSection({
   rewriteLocalhostLinks,
   steerActiveThreadOnEnter,
 }: GeneralSettingsSectionProps) {
-  const localhostRewriteDescription = localhostLinkRewriteDescription(
+  const { t } = useLingui();
+  const navigateAfterCreateLabel = t`Navigate to threads on creation`;
+  const followUpBehaviorLabel = t`Default thread followup behavior`;
+  const archiveConfirmationLabel = t`Thread archive confirmation`;
+  const keepHistoryLabel = t`Show messages from before a context clear`;
+  const summarizeShellLabel = t`Summarize shell commands`;
+  const inAppBrowserLabel = t`Open links in the in-app browser`;
+  const rewriteLocalhostLabel = t`Rewrite localhost links`;
+  const copyOnSelectLabel = t`Copy on select`;
+  const languageLabel = t`Language`;
+  const localhostRewriteExample = localhostLinkRewriteExample(
     typeof window === "undefined" ? undefined : window.location.hostname,
   );
+  const exampleHref = localhostRewriteExample?.href;
+  const rewrittenHref = localhostRewriteExample?.rewrittenHref;
+  const localhostRewriteDescription =
+    localhostRewriteExample === null
+      ? null
+      : t`When enabled, localhost URLs are rewritten to use the same host or IP address you use to open BB. For example: ${exampleHref} → ${rewrittenHref}`;
+  const selectedLanguage =
+    LANGUAGE_OPTIONS.find((option) => option.key === language) ??
+    LANGUAGE_OPTIONS[0];
   return (
     <>
-      <SettingsSection title="Threads & editing">
+      <SettingsSection title={t`Interface`}>
+        <ChoiceDropdownSetting
+          label={languageLabel}
+          description={t`Language of the bb interface.`}
+          triggerAriaLabel={languageLabel}
+          options={LANGUAGE_OPTIONS.map((option) => ({
+            key: option.key,
+            title: option.title,
+            description: t(option.description),
+          }))}
+          selected={selectedLanguage}
+          disabled={generalSettingsDisabled}
+          onSelect={(key) => {
+            const next = LANGUAGE_OPTIONS.find((option) => option.key === key);
+            if (next !== undefined) onLanguageChange(next.key);
+          }}
+        />
+      </SettingsSection>
+      <SettingsSection title={t`Threads & editing`}>
         <div className="space-y-5">
-          <SettingsWithControl
-            label={NAVIGATE_TO_THREAD_AFTER_CREATE_SETTING_LABEL}
-          >
+          <SettingsWithControl label={navigateAfterCreateLabel}>
             <Switch
               checked={navigateToThreadAfterCreate}
               onCheckedChange={onNavigateToThreadAfterCreateChange}
-              aria-label={NAVIGATE_TO_THREAD_AFTER_CREATE_SETTING_LABEL}
+              aria-label={navigateAfterCreateLabel}
             />
           </SettingsWithControl>
 
           <SettingsWithControl
-            label={FOLLOW_UP_BEHAVIOR_SETTING_LABEL}
-            description="What Enter does in the prompt box while the thread runs."
+            label={followUpBehaviorLabel}
+            description={t`What Enter does in the prompt box while the thread runs.`}
           >
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -909,9 +953,9 @@ export function GeneralSettingsSection({
                   size="sm"
                   className={SETTINGS_DROPDOWN_TRIGGER_CLASS}
                   disabled={generalSettingsDisabled}
-                  aria-label={FOLLOW_UP_BEHAVIOR_SETTING_LABEL}
+                  aria-label={followUpBehaviorLabel}
                 >
-                  {steerActiveThreadOnEnter ? "Steer" : "Queue"}
+                  {steerActiveThreadOnEnter ? t`Steer` : t`Queue`}
                   <Icon
                     name="ChevronDown"
                     className="size-3.5 text-muted-foreground"
@@ -924,16 +968,16 @@ export function GeneralSettingsSection({
               >
                 {FOLLOW_UP_BEHAVIOR_OPTIONS.map((option) => (
                   <DropdownMenuItem
-                    key={option.label}
+                    key={option.label.message}
                     className="items-start"
                     onSelect={() =>
                       onSteerActiveThreadOnEnterChange(option.steerOnEnter)
                     }
                   >
                     <span className="min-w-0">
-                      <span className="block">{option.label}</span>
+                      <span className="block">{t(option.label)}</span>
                       <span className="block text-2xs leading-snug text-subtle-foreground">
-                        {option.description}
+                        {t(option.description)}
                       </span>
                     </span>
                     <Icon
@@ -952,44 +996,44 @@ export function GeneralSettingsSection({
           </SettingsWithControl>
 
           <SettingsWithControl
-            label="Thread archive confirmation"
-            description="Ask before archiving a thread with unarchived child threads."
+            label={archiveConfirmationLabel}
+            description={t`Ask before archiving a thread with unarchived child threads.`}
           >
             <Switch
               checked={confirmThreadArchive}
               disabled={generalSettingsDisabled}
               onCheckedChange={onConfirmThreadArchiveChange}
-              aria-label="Thread archive confirmation"
+              aria-label={archiveConfirmationLabel}
             />
           </SettingsWithControl>
 
           <SettingsWithControl
-            label="Show messages from before a context clear"
-            description="Earlier messages stay in the thread for you to read. The agent doesn't see them."
+            label={keepHistoryLabel}
+            description={t`Earlier messages stay in the thread for you to read. The agent doesn't see them.`}
           >
             <Switch
               checked={keepHistoryAfterContextClear}
               disabled={generalSettingsDisabled}
               onCheckedChange={onKeepHistoryAfterContextClearChange}
-              aria-label="Show messages from before a context clear"
+              aria-label={keepHistoryLabel}
             />
           </SettingsWithControl>
 
           <SettingsWithControl
-            label="Summarize shell commands"
-            description="Show short summaries for commands that read, list, or search files. Turn off to show command text and let you expand each command to view its output."
+            label={summarizeShellLabel}
+            description={t`Show short summaries for commands that read, list, or search files. Turn off to show command text and let you expand each command to view its output.`}
           >
             <Switch
               checked={summarizeShellCommands}
               disabled={generalSettingsDisabled}
               onCheckedChange={onSummarizeShellCommandsChange}
-              aria-label="Summarize shell commands"
+              aria-label={summarizeShellLabel}
             />
           </SettingsWithControl>
 
           <SettingsWithControl
-            label="Setup guide"
-            description="Walk through connecting an agent, adding projects, plugins, and devices again."
+            label={t`Setup guide`}
+            description={t`Walk through connecting an agent, adding projects, plugins, and devices again.`}
           >
             <Button
               type="button"
@@ -998,29 +1042,29 @@ export function GeneralSettingsSection({
               disabled={generalSettingsDisabled}
               onClick={onReplaySetupGuide}
             >
-              Show setup guide
+              {t`Show setup guide`}
             </Button>
           </SettingsWithControl>
         </div>
       </SettingsSection>
-      <SettingsSection title="Links">
+      <SettingsSection title={t`Links`}>
         <div className="space-y-5">
           {desktopBrowserAvailable ? (
             <SettingsWithControl
-              label={IN_APP_BROWSER_LINK_SETTING_LABEL}
-              description="Open web links inside bb."
+              label={inAppBrowserLabel}
+              description={t`Open web links inside bb.`}
             >
               <Switch
                 checked={openLinksInAppBrowser}
                 onCheckedChange={onOpenLinksInAppBrowserChange}
-                aria-label={IN_APP_BROWSER_LINK_SETTING_LABEL}
+                aria-label={inAppBrowserLabel}
               />
             </SettingsWithControl>
           ) : null}
 
           {localhostRewriteDescription !== null ? (
             <SettingsWithControl
-              label={REWRITE_LOCALHOST_LINKS_SETTING_LABEL}
+              label={rewriteLocalhostLabel}
               description={
                 <span className="break-words [overflow-wrap:anywhere]">
                   {localhostRewriteDescription}
@@ -1030,23 +1074,23 @@ export function GeneralSettingsSection({
               <Switch
                 checked={rewriteLocalhostLinks}
                 onCheckedChange={onRewriteLocalhostLinksChange}
-                aria-label={REWRITE_LOCALHOST_LINKS_SETTING_LABEL}
+                aria-label={rewriteLocalhostLabel}
               />
             </SettingsWithControl>
           ) : null}
           <ApplicationLinkApprovalsSettings />
         </div>
       </SettingsSection>
-      <SettingsSection title="Terminals">
+      <SettingsSection title={t`Terminals`}>
         <SettingsWithControl
-          label="Copy on select"
-          description="Automatically copy selected terminal text and show a notification. Does not affect text elsewhere in the app. Linux middle-click paste uses the primary selection independently."
+          label={copyOnSelectLabel}
+          description={t`Automatically copy selected terminal text and show a notification. Does not affect text elsewhere in the app. Linux middle-click paste uses the primary selection independently.`}
         >
           <Switch
             checked={terminalCopyOnSelect}
             disabled={generalSettingsDisabled}
             onCheckedChange={onTerminalCopyOnSelectChange}
-            aria-label="Copy on select"
+            aria-label={copyOnSelectLabel}
           />
         </SettingsWithControl>
       </SettingsSection>
@@ -1072,42 +1116,46 @@ export function PrivacySettingsSection({
   telemetryEnabled,
   onTelemetryEnabledChange,
 }: PrivacySettingsSectionProps) {
+  const { t } = useLingui();
+  const streamerModeLabel = t`Streamer mode`;
+  const telemetryLabel = t`Share anonymous usage data`;
+  const diagnosticEventsLabel = t`Show diagnostic events`;
   return (
-    <SettingsSection title="Privacy & diagnostics">
+    <SettingsSection title={t`Privacy & diagnostics`}>
       <div className="space-y-5">
         <SettingsWithControl
-          label={STREAMER_MODE_SETTING_LABEL}
-          description="Hide the custom models from config.json in every model picker, so a screen share does not show them."
+          label={streamerModeLabel}
+          description={t`Hide the custom models from config.json in every model picker, so a screen share does not show them.`}
         >
           <Switch
             checked={streamerMode}
             disabled={disabled}
             onCheckedChange={onStreamerModeChange}
-            aria-label={STREAMER_MODE_SETTING_LABEL}
+            aria-label={streamerModeLabel}
           />
         </SettingsWithControl>
 
         <SettingsWithControl
-          label="Share anonymous usage data"
-          description="Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server."
+          label={telemetryLabel}
+          description={t`Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server.`}
         >
           <Switch
             checked={telemetryEnabled}
             disabled={disabled}
             onCheckedChange={onTelemetryEnabledChange}
-            aria-label="Share anonymous usage data"
+            aria-label={telemetryLabel}
           />
         </SettingsWithControl>
 
         <SettingsWithControl
-          label={DIAGNOSTIC_EVENTS_SETTING_LABEL}
-          description="Show provider environment resolution and unhandled provider events for troubleshooting."
+          label={diagnosticEventsLabel}
+          description={t`Show provider environment resolution and unhandled provider events for troubleshooting.`}
         >
           <Switch
             checked={enabled}
             disabled={disabled}
             onCheckedChange={onEnabledChange}
-            aria-label={DIAGNOSTIC_EVENTS_SETTING_LABEL}
+            aria-label={diagnosticEventsLabel}
           />
         </SettingsWithControl>
       </div>
@@ -1463,6 +1511,10 @@ export function SettingsView() {
           }
           desktopBrowserAvailable={desktopBrowserAvailable}
           generalSettingsDisabled={systemConfigQuery.data === undefined}
+          language={generalSettings.language}
+          onLanguageChange={(language) =>
+            updateGeneralSettingsMutation.mutate({ language })
+          }
           managedBranchPrefix={generalSettings.managedBranchPrefix}
           onManagedBranchPrefixChange={async (prefix) => {
             await updateGeneralSettingsMutation.mutateAsync({
