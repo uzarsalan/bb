@@ -6,8 +6,15 @@ import { vi } from "vitest";
 vi.mock("@lingui/react", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@lingui/react")>();
   const { i18n } = await import("@/i18n/i18n");
+  const { createElement } = await import("react");
   return {
     ...actual,
+    Trans: (props: Parameters<typeof actual.Trans>[0]) =>
+      createElement(
+        actual.I18nProvider,
+        { i18n },
+        createElement(actual.Trans, props),
+      ),
     useLingui: () => {
       try {
         return actual.useLingui();

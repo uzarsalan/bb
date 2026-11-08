@@ -1,3 +1,5 @@
+import { t as globalT } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
 import type { Host } from "@bb/domain";
 import type { CliSkillMachineStatus } from "@bb/server-contract";
@@ -21,12 +23,18 @@ interface InstallCliSkillsDialogContentProps {
   statusByHostId: ReadonlyMap<string, CliSkillMachineStatus>;
 }
 
-const MACHINE_STATUS_LABELS: Record<CliSkillMachineStatus, string | null> = {
-  installed: "Installed",
-  outdated: "Out of date",
-  missing: "Not installed",
-  unknown: null,
-};
+function machineStatusText(status: CliSkillMachineStatus): string | null {
+  switch (status) {
+    case "installed":
+      return globalT`Installed`;
+    case "outdated":
+      return globalT`Out of date`;
+    case "missing":
+      return globalT`Not installed`;
+    case "unknown":
+      return null;
+  }
+}
 
 function isConnected(host: Host): boolean {
   return host.status === "connected";
@@ -36,8 +44,8 @@ function machineStatusLabel(args: {
   connected: boolean;
   status: CliSkillMachineStatus | undefined;
 }): string | null {
-  if (!args.connected) return "Disconnected";
-  return args.status === undefined ? null : MACHINE_STATUS_LABELS[args.status];
+  if (!args.connected) return globalT`Disconnected`;
+  return args.status === undefined ? null : machineStatusText(args.status);
 }
 
 function InstallCliSkillsDialogContent({
@@ -47,6 +55,7 @@ function InstallCliSkillsDialogContent({
   pending,
   statusByHostId,
 }: InstallCliSkillsDialogContentProps) {
+  const { t } = useLingui();
   const connectedHostIds = useMemo(
     () => hosts.filter(isConnected).map((host) => host.id),
     [hosts],
@@ -54,6 +63,7 @@ function InstallCliSkillsDialogContent({
   const [selectedHostIds, setSelectedHostIds] =
     useState<readonly string[]>(connectedHostIds);
   const choosable = hosts.length > 1;
+  const singleHostName = hosts[0]?.name ?? t`the selected machine`;
   const selected = choosable
     ? selectedHostIds.filter((hostId) => connectedHostIds.includes(hostId))
     : connectedHostIds;
@@ -61,11 +71,11 @@ function InstallCliSkillsDialogContent({
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Install bb CLI skills</DialogTitle>
+        <DialogTitle>{t`Install bb CLI skills`}</DialogTitle>
         <DialogDescription>
           {choosable
-            ? "Choose the machines to install them onto. Each one gets the skills in ~/.agents/skills and ~/.claude/skills, replacing any copy already there."
-            : `The skills go in ~/.agents/skills and ~/.claude/skills on ${hosts[0]?.name ?? "the selected machine"}, replacing any copy already there.`}
+            ? t`Choose the machines to install them onto. Each one gets the skills in ~/.agents/skills and ~/.claude/skills, replacing any copy already there.`
+            : t`The skills go in ~/.agents/skills and ~/.claude/skills on ${singleHostName}, replacing any copy already there.`}
         </DialogDescription>
       </DialogHeader>
 
@@ -114,14 +124,14 @@ function InstallCliSkillsDialogContent({
           disabled={pending}
           onClick={onCancel}
         >
-          Cancel
+          {t`Cancel`}
         </Button>
         <Button
           type="button"
           disabled={pending || selected.length === 0}
           onClick={() => onInstall([...selected])}
         >
-          {pending ? "Installing…" : "Install"}
+          {pending ? t`Installing…` : t`Install`}
         </Button>
       </DialogFooter>
     </>

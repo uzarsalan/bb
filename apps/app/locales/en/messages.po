@@ -13,6 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: known.length
+#: src/components/settings/CliSkillsSettingsSection.tsx:43
+msgid "{0, plural, one {Installed on # machine} other {Installed on # machines}}"
+msgstr "{0, plural, one {Installed on # machine} other {Installed on # machines}}"
+
 #: src/components/settings/KeyboardSettingsSection.tsx:385
 msgid "{defaultsCount, plural, one {Default shortcut} other {Default shortcuts}} for {commandLabel}"
 msgstr "{defaultsCount, plural, one {Default shortcut} other {Default shortcuts}} for {commandLabel}"
@@ -26,17 +31,44 @@ msgstr "{defaultsCount, plural, one {Default:} other {Defaults:}}"
 msgid "{label} settings"
 msgstr "{label} settings"
 
+#: src/components/settings/VoiceInputSettingsSection.tsx:83
+msgid "<0>Check microphone access</0> to see available devices."
+msgstr "<0>Check microphone access</0> to see available devices."
+
 #: src/components/settings/settings-sections.ts:9
 msgid "AI services"
 msgstr "AI services"
+
+#. placeholder {0}: status.shadowedBy.path
+#: src/components/settings/CliCommandSettingsSection.tsx:32
+msgid "Already installed for use outside bb at {0}, by npm."
+msgstr "Already installed for use outside bb at {0}, by npm."
+
+#. placeholder {0}: status.shadowedBy.path
+#: src/components/settings/CliCommandSettingsSection.tsx:35
+msgid "Already installed for use outside bb at {0}, with the bb machine on this computer."
+msgstr "Already installed for use outside bb at {0}, with the bb machine on this computer."
 
 #: src/components/settings/KeyboardSettingsSection.tsx:429
 msgid "Also used by {conflictNames}. Context determines which command runs."
 msgstr "Also used by {conflictNames}. Context determines which command runs."
 
-#: src/components/settings/settings-search.ts:106
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:56
+msgid "Always allowed"
+msgstr "Always allowed"
+
+#: src/components/settings/settings-search.ts:117
 msgid "analytics"
 msgstr "analytics"
+
+#. placeholder {0}: status.shadowedBy.path
+#: src/components/settings/CliCommandSettingsSection.tsx:37
+msgid "Another bb at {0} comes first on your PATH. Remove it to install this one."
+msgstr "Another bb at {0} comes first on your PATH. Remove it to install this one."
+
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:36
+msgid "App links"
+msgstr "App links"
 
 #: src/components/settings/settings-sections.ts:10
 msgid "Appearance"
@@ -58,11 +90,19 @@ msgstr "Automatically copy selected terminal text and show a notification. Does 
 msgid "background"
 msgstr "background"
 
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:37
+msgid "BB asks before opening links like linear:// in another app. Approvals stay on this device and aren't synced."
+msgstr "BB asks before opening links like linear:// in another app. Approvals stay on this device and aren't synced."
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:64
+msgid "bb CLI skills"
+msgstr "bb CLI skills"
+
 #: src/views/SettingsView.tsx:658
 msgid "bb puts this in front of every branch it creates for a worktree, such as {draft}{MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG}. Leave it empty for no prefix."
 msgstr "bb puts this in front of every branch it creates for a worktree, such as {draft}{MANAGED_BRANCH_PREFIX_EXAMPLE_SLUG}. Leave it empty for no prefix."
 
-#: src/components/settings/settings-search.ts:88
+#: src/components/settings/settings-search.ts:99
 msgid "branch name"
 msgstr "branch name"
 
@@ -70,13 +110,18 @@ msgstr "branch name"
 msgid "Browser"
 msgstr "Browser"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:812
+#: src/components/settings/InstallCliSkillsDialog.tsx:127
+#: src/components/settings/KeyboardSettingsSection.tsx:814
 msgid "Cancel"
 msgstr "Cancel"
 
 #: src/components/settings/settings-search.ts:62
 msgid "child threads"
 msgstr "child threads"
+
+#: src/components/settings/InstallCliSkillsDialog.tsx:77
+msgid "Choose the machines to install them onto. Each one gets the skills in ~/.agents/skills and ~/.claude/skills, replacing any copy already there."
+msgstr "Choose the machines to install them onto. Each one gets the skills in ~/.agents/skills and ~/.claude/skills, replacing any copy already there."
 
 #: src/components/settings/settings-search.ts:66
 msgid "clear context"
@@ -86,9 +131,13 @@ msgstr "clear context"
 msgid "Clear shortcut for {commandLabel}"
 msgstr "Clear shortcut for {commandLabel}"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:762
+#: src/components/settings/KeyboardSettingsSection.tsx:764
 msgid "Click a shortcut, then press its new keys. Changes sync to every bb window."
 msgstr "Click a shortcut, then press its new keys. Changes sync to every bb window."
+
+#: src/components/settings/CliCommandSettingsSection.tsx:48
+msgid "Command line"
+msgstr "Command line"
 
 #: src/components/settings/settings-sections.ts:26
 msgid "Community"
@@ -98,15 +147,23 @@ msgstr "Community"
 msgid "confirm"
 msgstr "confirm"
 
+#: src/components/settings/CliSkillsSettingsSection.tsx:32
+msgid "Connect a machine to install them into ~/.agents/skills and ~/.claude/skills."
+msgstr "Connect a machine to install them into ~/.agents/skills and ~/.claude/skills."
+
 #: src/views/SettingsView.tsx:901
 msgid "Copy on select"
 msgstr "Copy on select"
+
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:28
+msgid "Couldn't remove app link approval"
+msgstr "Couldn't remove app link approval"
 
 #: src/components/settings/KeyboardSettingsSection.tsx:378
 msgid "Custom"
 msgstr "Custom"
 
-#: src/components/settings/settings-search.ts:110
+#: src/components/settings/settings-search.ts:121
 msgid "debug"
 msgstr "debug"
 
@@ -123,6 +180,10 @@ msgstr "Default thread followup behavior"
 #: src/components/settings/KeyboardSettingsSection.tsx:377
 msgid "Desktop"
 msgstr "Desktop"
+
+#: src/components/settings/InstallCliSkillsDialog.tsx:47
+msgid "Disconnected"
+msgstr "Disconnected"
 
 #: src/views/SettingsView.tsx:1012
 msgid "Earlier messages stay in the thread for you to read. The agent doesn't see them."
@@ -168,11 +229,11 @@ msgstr "General"
 msgid "getting started"
 msgstr "getting started"
 
-#: src/components/settings/settings-search.ts:88
+#: src/components/settings/settings-search.ts:99
 msgid "git"
 msgstr "git"
 
-#: src/components/settings/settings-search.ts:102
+#: src/components/settings/settings-search.ts:113
 msgid "hide models"
 msgstr "hide models"
 
@@ -184,9 +245,66 @@ msgstr "Hide the custom models from config.json in every model picker, so a scre
 msgid "history"
 msgstr "history"
 
+#: src/components/settings/CliCommandSettingsSection.tsx:67
+#: src/components/settings/CliSkillsSettingsSection.tsx:81
+#: src/components/settings/InstallCliSkillsDialog.tsx:134
+msgid "Install"
+msgstr "Install"
+
+#: src/components/settings/CliCommandSettingsSection.tsx:64
+msgid "Install {CLI_COMMAND_SETTING_LABEL}"
+msgstr "Install {CLI_COMMAND_SETTING_LABEL}"
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:79
+msgid "Install {settingLabel}"
+msgstr "Install {settingLabel}"
+
+#: src/components/settings/InstallCliSkillsDialog.tsx:74
+msgid "Install bb CLI skills"
+msgstr "Install bb CLI skills"
+
+#: src/components/settings/CliCommandSettingsSection.tsx:29
+msgid "Install the bb CLI for use outside bb. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex. Threads in bb already have it."
+msgstr "Install the bb CLI for use outside bb. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex. Threads in bb already have it."
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:31
+msgid "Install them into ~/.agents/skills and ~/.claude/skills so agents outside bb can use the bb CLI."
+msgstr "Install them into ~/.agents/skills and ~/.claude/skills so agents outside bb can use the bb CLI."
+
+#: src/components/settings/CliCommandSettingsSection.tsx:52
+#: src/components/settings/CliSkillsSettingsSection.tsx:47
+#: src/components/settings/InstallCliSkillsDialog.tsx:29
+msgid "Installed"
+msgstr "Installed"
+
+#. placeholder {0}: status.installedPath
+#: src/components/settings/CliCommandSettingsSection.tsx:26
+msgid "Installed at {0}, but its folder is not on your PATH. Add the folder to your PATH to use bb outside bb."
+msgstr "Installed at {0}, but its folder is not on your PATH. Add the folder to your PATH to use bb outside bb."
+
+#. placeholder {0}: status.installedPath
+#: src/components/settings/CliCommandSettingsSection.tsx:25
+msgid "Installed at {0}. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex."
+msgstr "Installed at {0}. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex."
+
+#. placeholder {0}: known.length
+#: src/components/settings/CliSkillsSettingsSection.tsx:50
+msgid "Installed on {installed} of {0} machines"
+msgstr "Installed on {installed} of {0} machines"
+
 #: src/components/settings/settings-sections.ts:23
 msgid "Installed plugins"
 msgstr "Installed plugins"
+
+#. placeholder {0}: hostNames(installed)
+#: src/components/settings/CliSkillsSettingsSection.tsx:94
+msgid "Installed the bb CLI skills on {0}"
+msgstr "Installed the bb CLI skills on {0}"
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:81
+#: src/components/settings/InstallCliSkillsDialog.tsx:134
+msgid "Installing…"
+msgstr "Installing…"
 
 #: src/components/settings/settings-search.ts:50
 msgid "interface"
@@ -200,7 +318,7 @@ msgstr "Interface"
 msgid "Keyboard"
 msgstr "Keyboard"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:763
+#: src/components/settings/KeyboardSettingsSection.tsx:765
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
@@ -217,17 +335,38 @@ msgstr "Language of the bb interface."
 msgid "Links"
 msgstr "Links"
 
+#: src/components/settings/VoiceInputSettingsSection.tsx:135
+#: src/components/settings/VoiceInputSettingsSection.tsx:144
+msgid "Load microphones"
+msgstr "Load microphones"
+
+#: src/components/settings/VoiceInputSettingsSection.tsx:135
+msgid "Loading microphones"
+msgstr "Loading microphones"
+
+#: src/components/settings/VoiceInputSettingsSection.tsx:76
+msgid "Loading microphones."
+msgstr "Loading microphones."
+
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:41
+msgid "Loading…"
+msgstr "Loading…"
+
 #: src/components/settings/settings-search.ts:50
 msgid "locale"
 msgstr "locale"
 
-#: src/components/settings/settings-search.ts:110
+#: src/components/settings/settings-search.ts:121
 msgid "logs"
 msgstr "logs"
 
 #: src/components/settings/settings-sections.ts:15
 msgid "Machines"
 msgstr "Machines"
+
+#: src/components/settings/VoiceInputSettingsSection.tsx:113
+msgid "Microphone"
+msgstr "Microphone"
 
 #: src/components/settings/settings-sections.ts:16
 msgid "Mobile"
@@ -238,7 +377,7 @@ msgstr "Mobile"
 msgid "Navigate to threads on creation"
 msgstr "Navigate to threads on creation"
 
-#: src/components/settings/settings-search.ts:87
+#: src/components/settings/settings-search.ts:98
 #: src/views/SettingsView.tsx:634
 msgid "New branch prefix"
 msgstr "New branch prefix"
@@ -247,13 +386,22 @@ msgstr "New branch prefix"
 msgid "new thread"
 msgstr "new thread"
 
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:48
+msgid "No apps are always allowed."
+msgstr "No apps are always allowed."
+
 #: src/views/SettingsView.tsx:672
 msgid "No prefix"
 msgstr "No prefix"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:852
+#: src/components/settings/KeyboardSettingsSection.tsx:854
 msgid "No shortcuts match “{search}”."
 msgstr "No shortcuts match “{search}”."
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:54
+#: src/components/settings/InstallCliSkillsDialog.tsx:33
+msgid "Not installed"
+msgstr "Not installed"
 
 #: src/components/settings/settings-search.ts:70
 msgid "onboarding"
@@ -263,7 +411,7 @@ msgstr "onboarding"
 msgid "open"
 msgstr "open"
 
-#: src/components/settings/settings-search.ts:77
+#: src/components/settings/settings-search.ts:88
 #: src/views/SettingsView.tsx:899
 msgid "Open links in the in-app browser"
 msgstr "Open links in the in-app browser"
@@ -271,6 +419,11 @@ msgstr "Open links in the in-app browser"
 #: src/views/SettingsView.tsx:1055
 msgid "Open web links inside bb."
 msgstr "Open web links inside bb."
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:53
+#: src/components/settings/InstallCliSkillsDialog.tsx:31
+msgid "Out of date"
+msgstr "Out of date"
 
 #: src/components/settings/KeyboardSettingsSection.tsx:503
 msgid "Plugin commands"
@@ -284,13 +437,17 @@ msgstr "Plugin marketplaces"
 msgid "Plugin: {pluginId}"
 msgstr "Plugin: {pluginId}"
 
-#: src/components/settings/settings-search.ts:83
+#: src/components/settings/settings-search.ts:94
 msgid "port"
 msgstr "port"
 
 #: src/components/settings/settings-search.ts:46
 msgid "preferences"
 msgstr "preferences"
+
+#: src/components/settings/VoiceInputSettingsSection.tsx:99
+msgid "Preferred microphone is disconnected. Using another input until it reconnects."
+msgstr "Preferred microphone is disconnected. Using another input until it reconnects."
 
 #: src/components/settings/KeyboardSettingsSection.tsx:113
 msgid "Press a non-modifier key."
@@ -300,8 +457,8 @@ msgstr "Press a non-modifier key."
 msgid "Press keys"
 msgstr "Press keys"
 
-#: src/components/settings/settings-search.ts:102
-#: src/components/settings/settings-search.ts:106
+#: src/components/settings/settings-search.ts:113
+#: src/components/settings/settings-search.ts:117
 msgid "privacy"
 msgstr "privacy"
 
@@ -334,15 +491,27 @@ msgstr "Record shortcut for {label}, current shortcut {formattedShortcut}"
 msgid "Recording shortcut for {label}. Press keys or Escape to cancel."
 msgstr "Recording shortcut for {label}. Press keys or Escape to cancel."
 
-#: src/components/settings/settings-search.ts:83
+#: src/components/settings/settings-search.ts:94
 msgid "remote"
 msgstr "remote"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:805
+#: src/components/settings/CliCommandSettingsSection.tsx:67
+msgid "Remove"
+msgstr "Remove"
+
+#: src/components/settings/CliCommandSettingsSection.tsx:63
+msgid "Remove {CLI_COMMAND_SETTING_LABEL}"
+msgstr "Remove {CLI_COMMAND_SETTING_LABEL}"
+
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:74
+msgid "Remove {scheme} approval"
+msgstr "Remove {scheme} approval"
+
+#: src/components/settings/KeyboardSettingsSection.tsx:807
 msgid "Replace binding"
 msgstr "Replace binding"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:759
+#: src/components/settings/KeyboardSettingsSection.tsx:761
 msgid "Reset all"
 msgstr "Reset all"
 
@@ -350,7 +519,7 @@ msgstr "Reset all"
 msgid "Reset shortcut for {commandLabel}"
 msgstr "Reset shortcut for {commandLabel}"
 
-#: src/components/settings/settings-search.ts:82
+#: src/components/settings/settings-search.ts:93
 #: src/views/SettingsView.tsx:900
 msgid "Rewrite localhost links"
 msgstr "Rewrite localhost links"
@@ -359,19 +528,19 @@ msgstr "Rewrite localhost links"
 msgid "Russian"
 msgstr "Russian"
 
-#: src/components/settings/settings-search.ts:102
+#: src/components/settings/settings-search.ts:113
 msgid "screen share"
 msgstr "screen share"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:780
+#: src/components/settings/KeyboardSettingsSection.tsx:782
 msgid "Search keyboard shortcuts"
 msgstr "Search keyboard shortcuts"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:616
+#: src/components/settings/KeyboardSettingsSection.tsx:618
 msgid "Search results"
 msgstr "Search results"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:782
+#: src/components/settings/KeyboardSettingsSection.tsx:784
 msgid "Search shortcuts"
 msgstr "Search shortcuts"
 
@@ -379,27 +548,31 @@ msgstr "Search shortcuts"
 msgid "Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server."
 msgstr "Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server."
 
+#: src/components/settings/SettingsSidebar.tsx:382
+msgid "Settings"
+msgstr "Settings"
+
 #: src/components/settings/settings-search.ts:69
 #: src/views/SettingsView.tsx:1035
 msgid "Setup guide"
 msgstr "Setup guide"
 
-#: src/components/settings/settings-search.ts:105
+#: src/components/settings/settings-search.ts:116
 #: src/views/SettingsView.tsx:1121
 msgid "Share anonymous usage data"
 msgstr "Share anonymous usage data"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:791
+#: src/components/settings/KeyboardSettingsSection.tsx:793
 msgid "Shortcut already used by {pendingConflictNames}. Replace it with {pendingCommandName}?"
 msgstr "Shortcut already used by {pendingConflictNames}. Replace it with {pendingCommandName}?"
 
-#: src/components/settings/settings-search.ts:109
+#: src/components/settings/settings-search.ts:120
 #: src/views/SettingsView.tsx:1122
 msgid "Show diagnostic events"
 msgstr "Show diagnostic events"
 
-#: src/components/settings/KeyboardSettingsSection.tsx:768
-#: src/components/settings/KeyboardSettingsSection.tsx:771
+#: src/components/settings/KeyboardSettingsSection.tsx:770
+#: src/components/settings/KeyboardSettingsSection.tsx:773
 msgid "Show keyboard hints when holding CMD / Control"
 msgstr "Show keyboard hints when holding CMD / Control"
 
@@ -420,9 +593,13 @@ msgstr "Show setup guide"
 msgid "Show short summaries for commands that read, list, or search files. Turn off to show command text and let you expand each command to view its output."
 msgstr "Show short summaries for commands that read, list, or search files. Turn off to show command text and let you expand each command to view its output."
 
-#: src/components/settings/KeyboardSettingsSection.tsx:767
+#: src/components/settings/KeyboardSettingsSection.tsx:769
 msgid "Show shortcut badges after holding Command or Control."
 msgstr "Show shortcut badges after holding Command or Control."
+
+#: src/components/settings/CliSkillsSettingsSection.tsx:66
+msgid "Skills"
+msgstr "Skills"
 
 #: src/components/settings/settings-search.ts:58
 msgid "steer"
@@ -433,7 +610,7 @@ msgstr "steer"
 msgid "Steer"
 msgstr "Steer"
 
-#: src/components/settings/settings-search.ts:101
+#: src/components/settings/settings-search.ts:112
 #: src/views/SettingsView.tsx:1120
 msgid "Streamer mode"
 msgstr "Streamer mode"
@@ -442,13 +619,30 @@ msgstr "Streamer mode"
 msgid "Summarize shell commands"
 msgstr "Summarize shell commands"
 
-#: src/components/settings/settings-search.ts:106
+#: src/components/settings/VoiceInputSettingsSection.tsx:49
+#: src/components/settings/VoiceInputSettingsSection.tsx:53
+msgid "System default"
+msgstr "System default"
+
+#: src/components/settings/settings-search.ts:117
 msgid "telemetry"
 msgstr "telemetry"
 
 #: src/views/SettingsView.tsx:1084
 msgid "Terminals"
 msgstr "Terminals"
+
+#: src/components/settings/InstallCliSkillsDialog.tsx:66
+msgid "the selected machine"
+msgstr "the selected machine"
+
+#: src/components/settings/InstallCliSkillsDialog.tsx:78
+msgid "The skills go in ~/.agents/skills and ~/.claude/skills on {singleHostName}, replacing any copy already there."
+msgstr "The skills go in ~/.agents/skills and ~/.claude/skills on {singleHostName}, replacing any copy already there."
+
+#: src/components/settings/VoiceInputSettingsSection.tsx:73
+msgid "This browser does not expose microphone devices."
+msgstr "This browser does not expose microphone devices."
 
 #: src/views/SettingsView.tsx:661
 msgid "This prefix cannot start a valid git branch name."
@@ -467,9 +661,13 @@ msgstr "Threads & editing"
 msgid "translation"
 msgstr "translation"
 
-#: src/components/settings/settings-search.ts:110
+#: src/components/settings/settings-search.ts:121
 msgid "troubleshooting"
 msgstr "troubleshooting"
+
+#: src/components/settings/ApplicationLinkApprovalsSettings.tsx:29
+msgid "Try again."
+msgstr "Try again."
 
 #: src/components/settings/KeyboardSettingsSection.tsx:100
 msgid "unassigned"
@@ -479,12 +677,16 @@ msgstr "unassigned"
 msgid "Unassigned"
 msgstr "Unassigned"
 
+#: src/components/settings/VoiceInputSettingsSection.tsx:46
+msgid "Unsupported"
+msgstr "Unsupported"
+
 #: src/components/settings/settings-sections.ts:22
 msgid "Updates"
 msgstr "Updates"
 
-#: src/components/settings/settings-search.ts:78
-#: src/components/settings/settings-search.ts:83
+#: src/components/settings/settings-search.ts:89
+#: src/components/settings/settings-search.ts:94
 msgid "url"
 msgstr "url"
 
@@ -492,11 +694,19 @@ msgstr "url"
 msgid "Use Command, Control, or Alt with a key."
 msgstr "Use Command, Control, or Alt with a key."
 
+#: src/components/settings/VoiceInputSettingsSection.tsx:101
+msgid "Used for prompt voice input."
+msgstr "Used for prompt voice input."
+
+#: src/components/settings/VoiceInputSettingsSection.tsx:123
+msgid "Voice Input"
+msgstr "Voice Input"
+
 #: src/views/SettingsView.tsx:1036
 msgid "Walk through connecting an agent, adding projects, plugins, and devices again."
 msgstr "Walk through connecting an agent, adding projects, plugins, and devices again."
 
-#: src/components/settings/settings-search.ts:78
+#: src/components/settings/settings-search.ts:89
 msgid "web"
 msgstr "web"
 
@@ -516,6 +726,6 @@ msgstr "What Enter does in the prompt box while the thread runs."
 msgid "When enabled, localhost URLs are rewritten to use the same host or IP address you use to open BB. For example: {exampleHref} → {rewrittenHref}"
 msgstr "When enabled, localhost URLs are rewritten to use the same host or IP address you use to open BB. For example: {exampleHref} → {rewrittenHref}"
 
-#: src/components/settings/settings-search.ts:88
+#: src/components/settings/settings-search.ts:99
 msgid "worktree"
 msgstr "worktree"

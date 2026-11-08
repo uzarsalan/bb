@@ -1,3 +1,5 @@
+import { t as globalT } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import type { SystemCliCommandStatus } from "@bb/server-contract";
 import { Button } from "@bb/shared-ui/button";
 import {
@@ -20,19 +22,19 @@ export function describeCliCommandStatus(
 ): string {
   if (status.installedPath !== null) {
     return status.onPath
-      ? `Installed at ${status.installedPath}. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex.`
-      : `Installed at ${status.installedPath}, but its folder is not on your PATH. Add the folder to your PATH to use bb outside bb.`;
+      ? globalT`Installed at ${status.installedPath}. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex.`
+      : globalT`Installed at ${status.installedPath}, but its folder is not on your PATH. Add the folder to your PATH to use bb outside bb.`;
   }
   if (status.shadowedBy === null) {
-    return "Install the bb CLI for use outside bb. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex. Threads in bb already have it.";
+    return globalT`Install the bb CLI for use outside bb. You can control bb from any terminal, and so can agents outside bb, such as Claude Code or Codex. Threads in bb already have it.`;
   }
   if (status.shadowedBy.source === "npm") {
-    return `Already installed for use outside bb at ${status.shadowedBy.path}, by npm.`;
+    return globalT`Already installed for use outside bb at ${status.shadowedBy.path}, by npm.`;
   }
   if (status.shadowedBy.source === "machine") {
-    return `Already installed for use outside bb at ${status.shadowedBy.path}, with the bb machine on this computer.`;
+    return globalT`Already installed for use outside bb at ${status.shadowedBy.path}, with the bb machine on this computer.`;
   }
-  return `Another bb at ${status.shadowedBy.path} comes first on your PATH. Remove it to install this one.`;
+  return globalT`Another bb at ${status.shadowedBy.path} comes first on your PATH. Remove it to install this one.`;
 }
 
 export function CliCommandSettingsSectionContent({
@@ -40,13 +42,14 @@ export function CliCommandSettingsSectionContent({
   pending,
   status,
 }: CliCommandSettingsSectionContentProps) {
+  const { t } = useLingui();
   const installed = status.installedPath !== null;
   return (
-    <SettingsSection title="Command line">
+    <SettingsSection title={t`Command line`}>
       <SettingsWithControl
         controlPlacement="trailing"
         label={CLI_COMMAND_SETTING_LABEL}
-        {...(installed ? { labelBadge: "Installed" } : {})}
+        {...(installed ? { labelBadge: t`Installed` } : {})}
         description={describeCliCommandStatus(status)}
       >
         <Button
@@ -55,9 +58,13 @@ export function CliCommandSettingsSectionContent({
           size="sm"
           disabled={pending || (!installed && status.shadowedBy !== null)}
           onClick={() => onChange(installed ? "remove" : "install")}
-          aria-label={`${installed ? "Remove" : "Install"} ${CLI_COMMAND_SETTING_LABEL}`}
+          aria-label={
+            installed
+              ? t`Remove ${CLI_COMMAND_SETTING_LABEL}`
+              : t`Install ${CLI_COMMAND_SETTING_LABEL}`
+          }
         >
-          {installed ? "Remove" : "Install"}
+          {installed ? t`Remove` : t`Install`}
         </Button>
       </SettingsWithControl>
     </SettingsSection>

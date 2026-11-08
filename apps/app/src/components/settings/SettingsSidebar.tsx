@@ -379,7 +379,7 @@ export function SettingsSidebarContent({
   return (
     <SectionSidebar
       backTo={backTo}
-      title="Settings"
+      title={t`Settings`}
       isResizing={isResizing}
       onResizeMouseDown={onResizeMouseDown}
       testIdPrefix={testIdPrefix}

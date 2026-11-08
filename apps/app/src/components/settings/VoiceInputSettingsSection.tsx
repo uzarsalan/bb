@@ -1,3 +1,6 @@
+import { t as globalT } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui as useLinguiSubscription } from "@lingui/react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@bb/shared-ui/button";
 import { Icon } from "@bb/shared-ui/icon";
@@ -29,9 +32,6 @@ interface VoiceInputSettingsSectionContentProps {
   preferredDeviceId: PreferredAudioInputDeviceId;
 }
 
-const SYSTEM_DEFAULT_MICROPHONE_LABEL = "System default";
-const MICROPHONE_SETTING_LABEL = "Microphone";
-
 function selectedMicrophoneLabel({
   devices,
   isSupported,
@@ -42,14 +42,14 @@ function selectedMicrophoneLabel({
   preferredDeviceId: PreferredAudioInputDeviceId;
 }): string {
   if (!isSupported) {
-    return "Unsupported";
+    return globalT`Unsupported`;
   }
   if (preferredDeviceId === null) {
-    return SYSTEM_DEFAULT_MICROPHONE_LABEL;
+    return globalT`System default`;
   }
   return (
     devices.find((device) => device.deviceId === preferredDeviceId)?.label ??
-    SYSTEM_DEFAULT_MICROPHONE_LABEL
+    globalT`System default`
   );
 }
 
@@ -69,17 +69,17 @@ function microphoneSettingDescription({
   preferredDeviceId: PreferredAudioInputDeviceId;
 }): ReactNode {
   if (!isSupported) {
-    return "This browser does not expose microphone devices.";
+    return globalT`This browser does not expose microphone devices.`;
   }
   if (isLoading) {
-    return "Loading microphones.";
+    return globalT`Loading microphones.`;
   }
   if (errorMessage !== null) {
     return errorMessage;
   }
   if (devices.length === 0) {
     return (
-      <>
+      <Trans>
         <button
           type="button"
           className="rounded-sm underline underline-offset-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
@@ -88,16 +88,16 @@ function microphoneSettingDescription({
           Check microphone access
         </button>{" "}
         to see available devices.
-      </>
+      </Trans>
     );
   }
   if (
     preferredDeviceId !== null &&
     devices.every((device) => device.deviceId !== preferredDeviceId)
   ) {
-    return "Preferred microphone is disconnected. Using another input until it reconnects.";
+    return globalT`Preferred microphone is disconnected. Using another input until it reconnects.`;
   }
-  return "Used for prompt voice input.";
+  return globalT`Used for prompt voice input.`;
 }
 
 export function VoiceInputSettingsSectionContent({
@@ -108,6 +108,8 @@ export function VoiceInputSettingsSectionContent({
   onRefresh,
   preferredDeviceId,
 }: VoiceInputSettingsSectionContentProps) {
+  const { t } = useLingui();
+  const microphoneLabel = t`Microphone`;
   const [preferencesOpen, setPreferencesOpen] = useState(false);
   const triggerLabel = selectedMicrophoneLabel({
     devices,
@@ -117,7 +119,7 @@ export function VoiceInputSettingsSectionContent({
 
   return (
     <SettingsSection
-      title="Voice Input"
+      title={t`Voice Input`}
       actionPlacement="inline"
       action={
         <Tooltip delayDuration={300} disableHoverableContent>
@@ -129,7 +131,7 @@ export function VoiceInputSettingsSectionContent({
               disabled={!isSupported || isLoading}
               onClick={() => onRefresh(true)}
               aria-label={
-                isLoading ? "Loading microphones" : "Load microphones"
+                isLoading ? t`Loading microphones` : t`Load microphones`
               }
             >
               <Icon
@@ -138,12 +140,12 @@ export function VoiceInputSettingsSectionContent({
               />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="bottom">Load microphones</TooltipContent>
+          <TooltipContent side="bottom">{t`Load microphones`}</TooltipContent>
         </Tooltip>
       }
     >
       <SettingsWithControl
-        label={MICROPHONE_SETTING_LABEL}
+        label={microphoneLabel}
         description={microphoneSettingDescription({
           onRequestAccess: () => onRefresh(true),
           devices,
@@ -166,7 +168,7 @@ export function VoiceInputSettingsSectionContent({
               size="sm"
               className={SETTINGS_DROPDOWN_TRIGGER_CLASS}
               {...MicrophonePreferencesSplit.intentProps}
-              aria-label={MICROPHONE_SETTING_LABEL}
+              aria-label={microphoneLabel}
               disabled={!isSupported}
             >
               <span className="flex min-w-0 items-center gap-2">
@@ -193,6 +195,7 @@ export function VoiceInputSettingsSectionContent({
 }
 
 export function VoiceInputSettingsSection() {
+  useLinguiSubscription();
   const preferredDeviceId = useAudioInputDevicePreferenceValue();
   const { devices, errorMessage, isLoading, isSupported, refresh } =
     useAudioInputDevices();

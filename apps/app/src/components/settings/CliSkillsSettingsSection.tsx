@@ -1,3 +1,6 @@
+import { plural, t as globalT } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
+import { useLingui as useLinguiSubscription } from "@lingui/react";
 import { useMemo, useState } from "react";
 import type { Host } from "@bb/domain";
 import type {
@@ -16,8 +19,6 @@ import { useInstallCliSkills } from "@/hooks/mutations/settings-mutations";
 import { selectHosts, useHosts } from "@/hooks/queries/host-queries";
 import { useCliSkillsStatus } from "@/hooks/queries/system-queries";
 
-const CLI_SKILLS_SETTING_LABEL = "bb CLI skills";
-
 interface CliSkillsSettingsSectionContentProps {
   hasConnectedMachine: boolean;
   onOpenPicker: () => void;
@@ -27,8 +28,8 @@ interface CliSkillsSettingsSectionContentProps {
 
 function installDescription(hasConnectedMachine: boolean): string {
   return hasConnectedMachine
-    ? "Install them into ~/.agents/skills and ~/.claude/skills so agents outside bb can use the bb CLI."
-    : "Connect a machine to install them into ~/.agents/skills and ~/.claude/skills.";
+    ? globalT`Install them into ~/.agents/skills and ~/.claude/skills so agents outside bb can use the bb CLI.`
+    : globalT`Connect a machine to install them into ~/.agents/skills and ~/.claude/skills.`;
 }
 
 export function summarizeMachineStatuses(
@@ -39,15 +40,18 @@ export function summarizeMachineStatuses(
   const installed = known.filter((status) => status === "installed").length;
   if (installed === known.length) {
     return known.length > 1
-      ? `Installed on ${known.length} machines`
-      : "Installed";
+      ? plural(known.length, {
+          one: "Installed on # machine",
+          other: "Installed on # machines",
+        })
+      : globalT`Installed`;
   }
   if (installed > 0) {
-    return `Installed on ${installed} of ${known.length} machines`;
+    return globalT`Installed on ${installed} of ${known.length} machines`;
   }
   return known.some((status) => status === "outdated")
-    ? "Out of date"
-    : "Not installed";
+    ? globalT`Out of date`
+    : globalT`Not installed`;
 }
 
 export function CliSkillsSettingsSectionContent({
@@ -56,11 +60,13 @@ export function CliSkillsSettingsSectionContent({
   pending,
   statusBadge,
 }: CliSkillsSettingsSectionContentProps) {
+  const { t } = useLingui();
+  const settingLabel = t`bb CLI skills`;
   return (
-    <SettingsSection title="Skills">
+    <SettingsSection title={t`Skills`}>
       <SettingsWithControl
         controlPlacement="trailing"
-        label={CLI_SKILLS_SETTING_LABEL}
+        label={settingLabel}
         {...(statusBadge === null ? {} : { labelBadge: statusBadge })}
         description={installDescription(hasConnectedMachine)}
       >
@@ -70,9 +76,9 @@ export function CliSkillsSettingsSectionContent({
           size="sm"
           disabled={!hasConnectedMachine || pending}
           onClick={onOpenPicker}
-          aria-label={`Install ${CLI_SKILLS_SETTING_LABEL}`}
+          aria-label={t`Install ${settingLabel}`}
         >
-          {pending ? "Installing…" : "Install"}
+          {pending ? t`Installing…` : t`Install`}
         </Button>
       </SettingsWithControl>
     </SettingsSection>
@@ -80,13 +86,13 @@ export function CliSkillsSettingsSectionContent({
 }
 
 function reportInstallResults(result: SystemInstallCliSkillsResponse): void {
+  const hostNames = (entries: typeof result.results) =>
+    entries.map((entry) => entry.hostName).join(", ");
   const installed = result.results.filter((entry) => entry.ok);
   const failed = result.results.filter((entry) => !entry.ok);
   if (installed.length > 0) {
     appToast.success(
-      `Installed the bb CLI skills on ${installed
-        .map((entry) => entry.hostName)
-        .join(", ")}`,
+      globalT`Installed the bb CLI skills on ${hostNames(installed)}`,
     );
   }
   for (const entry of failed) {
@@ -103,6 +109,7 @@ function statusByHostId(
 }
 
 export function CliSkillsSettingsSection() {
+  useLinguiSubscription();
   const hostsQuery = useHosts();
   const statusQuery = useCliSkillsStatus();
   const installCliSkills = useInstallCliSkills();
