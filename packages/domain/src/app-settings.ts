@@ -21,6 +21,11 @@ export const managedBranchPrefixSchema = z
     message: "Prefix must start a valid git branch name",
   });
 
+export const APP_LANGUAGES = ["en", "ru"] as const;
+
+export const appLanguageSchema = z.enum(APP_LANGUAGES);
+export type AppLanguage = z.infer<typeof appLanguageSchema>;
+
 export const appSettingsSchema = z
   .object({
     showKeyboardHints: z.boolean(),
@@ -57,6 +62,7 @@ export const appSettingsSchema = z
     defaultMachineAccess: z.string().min(1).nullable(),
     onboardingCompletedAt: z.string().min(1).nullable(),
     earlyAdopter: z.boolean(),
+    language: appLanguageSchema,
   })
   .strict();
 export type AppSettings = z.infer<typeof appSettingsSchema>;
@@ -82,6 +88,7 @@ export const defaultAppSettings: AppSettings = {
   machineGitCredentialsEnabled: true,
   onboardingCompletedAt: null,
   earlyAdopter: false,
+  language: "en",
 };
 
 export const disabledProviderIdsSchema = z.array(z.string().min(1));
@@ -99,6 +106,7 @@ export const appSettingsUpdateSchema = z.union([
     showUnhandledProviderEvents: z.boolean().optional(),
     onboardingCompletedAt: z.string().min(1).nullable().optional(),
     earlyAdopter: z.boolean().optional(),
+    language: appLanguageSchema.optional(),
   }),
   appSettingsSchema.omit({ showDiagnosticEvents: true }).extend({
     idleProviderSessionTimeoutMinutes:
@@ -112,6 +120,7 @@ export const appSettingsUpdateSchema = z.union([
     showUnhandledProviderEvents: z.boolean(),
     onboardingCompletedAt: z.string().min(1).nullable().optional(),
     earlyAdopter: z.boolean().optional(),
+    language: appLanguageSchema.optional(),
   }),
 ]);
 export type AppSettingsUpdate = z.infer<typeof appSettingsUpdateSchema>;

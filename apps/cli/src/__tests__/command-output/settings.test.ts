@@ -39,6 +39,34 @@ describe("bb settings commands", () => {
     },
   );
 
+  it("sets the interface language through general settings", async () => {
+    const put = vi.fn(async ({ json }) => json);
+    stubServerApi({
+      "v1.system.config.$get": vi.fn(async () => ({
+        generalSettings: defaultAppSettings,
+      })),
+      "v1.settings.general.$put": put,
+    });
+    await runCommand(["settings", "general", "language", "ru"], register);
+    expect(put).toHaveBeenCalledWith({
+      json: { ...defaultAppSettings, language: "ru" },
+    });
+  });
+
+  it("rejects an unsupported interface language without writing settings", async () => {
+    const put = vi.fn(async ({ json }) => json);
+    stubServerApi({
+      "v1.system.config.$get": vi.fn(async () => ({
+        generalSettings: defaultAppSettings,
+      })),
+      "v1.settings.general.$put": put,
+    });
+    await expect(
+      runCommand(["settings", "general", "language", "xx"], register),
+    ).rejects.toThrow("process.exit:1");
+    expect(put).not.toHaveBeenCalled();
+  });
+
   it("rejects an idle timeout outside the allowed values without writing settings", async () => {
     const put = vi.fn(async ({ json }) => json);
     stubServerApi({

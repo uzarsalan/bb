@@ -122,6 +122,10 @@ General. Machine-related keys (`machineServerUrl`, `defaultMachineAccess`,
   `system.updateGeneralSettings`. Explicit Copy/Paste work when off. Supported
   Linux browsers use native primary selection for middle-click paste,
   independently of this preference, never the regular clipboard as a fallback.
+- `language` (default `en`; Settings → General → Language) selects the
+  interface language, `en` or `ru`. Set it with
+  `bb settings general language <en|ru>` or SDK `system.updateGeneralSettings`.
+  Only the web and desktop interface is translated; CLI output stays English.
 - `streamerMode` (default false) hides every `customModels` entry from
   `~/.bb/config.json` in all model lists (pickers, `bb provider models`, and
   the SDK) during a screen share. The entries stay in the config file; a

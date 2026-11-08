@@ -318,3 +318,30 @@ it.each([
     });
   },
 );
+
+describe("interface language setting", () => {
+  it("defaults to en, persists ru and is preserved by older clients", async () => {
+    await withTestHarness(async (harness) => {
+      expect(getAppSettings(harness.db).language).toBe("en");
+      const put = (settings: unknown) =>
+        harness.app.request("/api/v1/settings/general", {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(settings),
+        });
+      expect((await put({ ...defaultAppSettings, language: "ru" })).status).toBe(
+        200,
+      );
+      expect(getAppSettings(harness.db).language).toBe("ru");
+      const { language, ...legacy } = defaultAppSettings;
+      expect(language).toBe("en");
+      expect((await put({ ...legacy, showKeyboardHints: false })).status).toBe(
+        200,
+      );
+      expect(getAppSettings(harness.db).language).toBe("ru");
+      expect((await put({ ...defaultAppSettings, language: "xx" })).status).toBe(
+        400,
+      );
+    });
+  });
+});

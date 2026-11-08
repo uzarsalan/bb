@@ -327,6 +327,7 @@ export function registerSystemRoutes(
       confirmThreadArchive:
         settings.confirmThreadArchive ?? current.confirmThreadArchive,
       earlyAdopter: settings.earlyAdopter ?? current.earlyAdopter,
+      language: settings.language ?? current.language,
       onboardingCompletedAt:
         settings.onboardingCompletedAt === undefined
           ? current.onboardingCompletedAt
