@@ -31,7 +31,7 @@ msgstr "{defaultsCount, plural, one {Default:} other {Defaults:}}"
 msgid "{label} settings"
 msgstr "{label} settings"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:83
+#: src/components/settings/VoiceInputSettingsSection.tsx:82
 msgid "<0>Check microphone access</0> to see available devices."
 msgstr "<0>Check microphone access</0> to see available devices."
 
@@ -297,7 +297,7 @@ msgid "Installed plugins"
 msgstr "Installed plugins"
 
 #. placeholder {0}: hostNames(installed)
-#: src/components/settings/CliSkillsSettingsSection.tsx:94
+#: src/components/settings/CliSkillsSettingsSection.tsx:95
 msgid "Installed the bb CLI skills on {0}"
 msgstr "Installed the bb CLI skills on {0}"
 
@@ -335,18 +335,22 @@ msgstr "Language of the bb interface."
 msgid "Links"
 msgstr "Links"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:135
-#: src/components/settings/VoiceInputSettingsSection.tsx:144
+#: src/components/settings/VoiceInputSettingsSection.tsx:134
+#: src/components/settings/VoiceInputSettingsSection.tsx:143
 msgid "Load microphones"
 msgstr "Load microphones"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:135
+#: src/components/settings/VoiceInputSettingsSection.tsx:134
 msgid "Loading microphones"
 msgstr "Loading microphones"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:76
+#: src/components/settings/VoiceInputSettingsSection.tsx:75
 msgid "Loading microphones."
 msgstr "Loading microphones."
+
+#: src/components/settings/LazySettingsSidebar.tsx:19
+msgid "Loading settings navigation"
+msgstr "Loading settings navigation"
 
 #: src/components/settings/ApplicationLinkApprovalsSettings.tsx:41
 msgid "Loading…"
@@ -364,7 +368,7 @@ msgstr "logs"
 msgid "Machines"
 msgstr "Machines"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:113
+#: src/components/settings/VoiceInputSettingsSection.tsx:112
 msgid "Microphone"
 msgstr "Microphone"
 
@@ -445,7 +449,7 @@ msgstr "port"
 msgid "preferences"
 msgstr "preferences"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:99
+#: src/components/settings/VoiceInputSettingsSection.tsx:98
 msgid "Preferred microphone is disconnected. Using another input until it reconnects."
 msgstr "Preferred microphone is disconnected. Using another input until it reconnects."
 
@@ -548,6 +552,9 @@ msgstr "Search shortcuts"
 msgid "Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server."
 msgstr "Send anonymous usage data, such as app starts, setup progress and feature use, to help improve bb. Turning this off takes effect immediately for this server."
 
+#: src/components/layout/AppLayout.tsx:682
+#: src/components/layout/AppLayout.tsx:713
+#: src/components/settings/LazySettingsSidebar.tsx:13
 #: src/components/settings/SettingsSidebar.tsx:382
 msgid "Settings"
 msgstr "Settings"
@@ -619,8 +626,8 @@ msgstr "Streamer mode"
 msgid "Summarize shell commands"
 msgstr "Summarize shell commands"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:49
-#: src/components/settings/VoiceInputSettingsSection.tsx:53
+#: src/components/settings/VoiceInputSettingsSection.tsx:48
+#: src/components/settings/VoiceInputSettingsSection.tsx:52
 msgid "System default"
 msgstr "System default"
 
@@ -640,7 +647,7 @@ msgstr "the selected machine"
 msgid "The skills go in ~/.agents/skills and ~/.claude/skills on {singleHostName}, replacing any copy already there."
 msgstr "The skills go in ~/.agents/skills and ~/.claude/skills on {singleHostName}, replacing any copy already there."
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:73
+#: src/components/settings/VoiceInputSettingsSection.tsx:72
 msgid "This browser does not expose microphone devices."
 msgstr "This browser does not expose microphone devices."
 
@@ -677,7 +684,7 @@ msgstr "unassigned"
 msgid "Unassigned"
 msgstr "Unassigned"
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:46
+#: src/components/settings/VoiceInputSettingsSection.tsx:45
 msgid "Unsupported"
 msgstr "Unsupported"
 
@@ -694,11 +701,11 @@ msgstr "url"
 msgid "Use Command, Control, or Alt with a key."
 msgstr "Use Command, Control, or Alt with a key."
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:101
+#: src/components/settings/VoiceInputSettingsSection.tsx:100
 msgid "Used for prompt voice input."
 msgstr "Used for prompt voice input."
 
-#: src/components/settings/VoiceInputSettingsSection.tsx:123
+#: src/components/settings/VoiceInputSettingsSection.tsx:122
 msgid "Voice Input"
 msgstr "Voice Input"
 

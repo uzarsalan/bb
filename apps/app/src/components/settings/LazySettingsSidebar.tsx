@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { Skeleton } from "@bb/shared-ui/skeleton";
 import { SectionSidebar } from "@/components/sidebar/SectionSidebar";
 import type { RouteSidebarProps } from "@/components/layout/routeSidebar";
@@ -7,14 +8,15 @@ function SettingsSidebarPlaceholder({
   retry,
   ...props
 }: RouteSidebarProps & { retry?: () => void }) {
+  const { t } = useLingui();
   return (
-    <SectionSidebar title="Settings" testIdPrefix="settings" {...props}>
+    <SectionSidebar title={t`Settings`} testIdPrefix="settings" {...props}>
       {retry ? (
         <SplitLoadFailure retry={retry} />
       ) : (
         <div
           role="status"
-          aria-label="Loading settings navigation"
+          aria-label={t`Loading settings navigation`}
           className="space-y-3 p-3"
         >
           <Skeleton className="h-8 w-full" />
